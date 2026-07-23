@@ -1,0 +1,52 @@
+openapi: 3.1.0
+info:
+  title: ClearSlide Platform Insights Users API
+  version: 2.0.0
+  description: ClearSlide Public APIs give customers and partners programmatic access to core ClearSlide features, including uploading content, listing presentations, creating trackable links, getting engagement insights, listing users, and hosting scheduled meetings. Transcribed from the public ClearSlide developer portal (ReadMe). ClearSlide is a Bigtincan sales engagement platform.
+  contact:
+    name: ClearSlide API Support
+    email: apisupport@clearslide.com
+    url: https://developer.clearslide.com/
+  termsOfService: https://www.clearslide.com/legal/terms/
+servers:
+- url: https://platform.clearslide.com
+  description: ClearSlide Platform API (production)
+security:
+- oauth2:
+  - read
+  - write
+tags:
+- name: Users
+paths:
+  /users:
+    get:
+      operationId: getUsers
+      tags:
+      - Users
+      summary: List users
+      description: Returns a list of `user` objects that match query criteria.
+      security:
+      - oauth2:
+        - read
+      responses:
+        '200':
+          description: A list of user objects.
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: ClearSlide supports OAuth 2.0 Authorization Code (RFC 6749 §4.1) and Resource Owner Password Credentials (RFC 6749 §4.3) grants. Register a client redirect URL with apisupport@clearslide.com to receive a client id and client secret.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://oauth.platform.clearslide.com/oauth/authorize
+          tokenUrl: https://oauth.platform.clearslide.com/oauth/token
+          refreshUrl: https://oauth.platform.clearslide.com/oauth/token
+          scopes:
+            read: Read access to ClearSlide resources
+            write: Write access to ClearSlide resources
+        password:
+          tokenUrl: https://oauth.platform.clearslide.com/oauth/token
+          refreshUrl: https://oauth.platform.clearslide.com/oauth/token
+          scopes:
+            read: Read access to ClearSlide resources
+            write: Write access to ClearSlide resources
