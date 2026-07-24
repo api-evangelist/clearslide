@@ -1,0 +1,24 @@
+{
+  "provider": "clearslide",
+  "sources": [
+    "clearslide-insights-api-openapi.yml",
+    "clearslide-links-api-openapi.yml",
+    "clearslide-meetings-api-openapi.yml",
+    "clearslide-presentations-api-openapi.yml",
+    "clearslide-upload-api-openapi.yml",
+    "clearslide-users-api-openapi.yml"
+  ],
+  "outputs": [
+    "clearslide-insights-api-openapi.yml",
+    "clearslide-links-api-openapi.yml",
+    "clearslide-meetings-api-openapi.yml",
+    "clearslide-presentations-api-openapi.yml",
+    "clearslide-upload-api-openapi.yml",
+    "clearslide-users-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

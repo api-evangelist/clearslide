@@ -1,0 +1,39 @@
+generated: '2026-07-18'
+method: derived
+status: candidate
+source: openapi/clearslide-openapi.yml
+server:
+  name: clearslide
+  transport: http
+  url: null
+notes: >-
+  No official hosted ClearSlide MCP server was found. This is a candidate tool list derived
+  one-to-one from the published OpenAPI operations.
+tools:
+  - name: list_presentations
+    description: List presentation objects matching query criteria (sorted by dateModified, page size 100).
+    source_operation: openapi/clearslide-openapi.yml#getPresentations
+  - name: create_link
+    description: Create a trackable link for a presentation.
+    source_operation: openapi/clearslide-openapi.yml#postLinks
+  - name: get_insights
+    description: Get engagement statistics for a particular sent pitch.
+    source_operation: openapi/clearslide-openapi.yml#getInsights
+  - name: list_users
+    description: List user objects matching query criteria.
+    source_operation: openapi/clearslide-openapi.yml#getUsers
+  - name: get_upload_credentials
+    description: Get temporary credentials to upload a file to ClearSlide (Amazon S3).
+    source_operation: openapi/clearslide-openapi.yml#postUpload
+  - name: get_upload_status
+    description: Check the status of an uploaded file.
+    source_operation: openapi/clearslide-openapi.yml#getUploadStatus
+  - name: list_scheduled_meetings
+    description: List all scheduled meetings.
+    source_operation: openapi/clearslide-openapi.yml#getScheduledMeetings
+  - name: reserve_scheduled_meeting
+    description: Reserve a temporary scheduled meeting.
+    source_operation: openapi/clearslide-openapi.yml#postScheduledMeeting
+  - name: update_scheduled_meeting
+    description: Update an existing scheduled meeting (set status ACTIVE/CANCELLED).
+    source_operation: openapi/clearslide-openapi.yml#putScheduledMeeting

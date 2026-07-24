@@ -1,0 +1,32 @@
+generated: '2026-07-18'
+method: searched
+source: https://www.clearslide.com/about/security/
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: OpenAPI securityScheme type oauth2 (authorizationCode + password flows), documented at developer.clearslide.com/docs/oauth-20
+  - id: oidc
+    conforms: false
+  - id: scim2
+    conforms: true
+    evidence: "SCIM at ClearSlide documented at developer.clearslide.com/docs/scim-at-clearslide"
+  - id: rfc9457-problem-details
+    conforms: false
+  - id: soc2
+    conforms: true
+    evidence: "Security and confidentiality controls certified and audited SOC 2, verified annually against AICPA Trust Services Criteria (about/security)"
+  - id: gdpr
+    conforms: true
+    evidence: "GDPR addressed on the ClearSlide security page"
+  - id: privacy-shield
+    conforms: true
+    evidence: "EU-U.S. and Swiss-U.S. Privacy Shield certifications listed (about/security)"
+  - id: truste
+    conforms: true
+    evidence: "Privacy standards certified by TRUSTe (about/security)"
+  - id: iso-27001
+    conforms: false
+  - id: pci-dss
+    conforms: false
+  - id: hipaa
+    conforms: false

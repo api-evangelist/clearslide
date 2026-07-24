@@ -1,0 +1,19 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for ClearSlide Platform API
+  version: 1.0.0
+extends: openapi/clearslide-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-source: https://developer.clearslide.com/
+      x-apievangelist-provider: clearslide
+      x-apievangelist-parent-company: Bigtincan
+      x-apievangelist-note: >-
+        Operations transcribed from the public ClearSlide ReadMe developer portal; request and
+        response schemas are intentionally minimal (not fabricated) pending a downloadable OpenAPI.
+  - target: $.info
+    update:
+      x-agentic-access:
+        default-action-class: read
+        note: GET operations are read/connected; write operations (links, uploads, meetings) are acting/write.

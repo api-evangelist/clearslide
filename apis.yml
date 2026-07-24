@@ -1,22 +1,202 @@
 aid: clearslide
 name: ClearSlide
-description: ClearSlide is a company surfaced as a portfolio company of a16z and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  ClearSlide is a sales engagement platform, now part of Bigtincan, that unifies content
+  management, communications (email, web conferencing, screen share), and real-time engagement
+  analytics so sales teams can make every buyer interaction count. Its public Platform API lets
+  customers and partners programmatically list presentations, create trackable links, retrieve
+  engagement insights, manage users (including SCIM provisioning), upload content to Amazon S3,
+  and reserve and manage scheduled meetings. The API uses OAuth 2.0 and is documented on a public
+  ReadMe developer portal at developer.clearslide.com. ClearSlide was originally an a16z-backed
+  company and is profiled here in the API Evangelist network.
+accessModel:
+  pricing: unknown
+  onboarding: approval
+  trial: false
+  try_now: false
+  public: false
+  label: Requires approval
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://www.clearslide.com/wp-content/themes/clearslide/images/logo.svg
 url: https://raw.githubusercontent.com/api-evangelist/clearslide/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - a16z
-x-tier: stub
-x-tier-reason: portfolio-lead
-specificationVersion: '0.20'
-created: '2026-07-17'
-modified: '2026-07-17'
+x-parent-company: Bigtincan
 tags:
 - Company
-apis: []
+- Sales Engagement
+- Sales Enablement
+- Content Management
+- Presentations
+- Analytics
+- Meetings
+- CRM
+- OAuth
+- SCIM
+specificationVersion: '0.20'
+created: '2026-07-17'
+modified: '2026-07-18'
+apis:
+- aid: clearslide:clearslide-insights-api
+  name: ClearSlide Insights API
+  description: The Insights API from ClearSlide — 1 operation(s) for insights.
+  humanURL: https://developer.clearslide.com/
+  baseURL: https://platform.clearslide.com
+  tags:
+  - Insights
+  properties:
+  - type: OpenAPI
+    url: openapi/clearslide-insights-api-openapi.yml
+  - type: APIReference
+    url: https://developer.clearslide.com/reference
+  - type: Documentation
+    url: https://developer.clearslide.com/docs/introduction
+  - type: GettingStarted
+    url: https://developer.clearslide.com/docs/getting-started-1
+- aid: clearslide:clearslide-links-api
+  name: ClearSlide Links API
+  description: The Links API from ClearSlide — 1 operation(s) for links.
+  humanURL: https://developer.clearslide.com/
+  baseURL: https://platform.clearslide.com
+  tags:
+  - Links
+  properties:
+  - type: OpenAPI
+    url: openapi/clearslide-links-api-openapi.yml
+  - type: APIReference
+    url: https://developer.clearslide.com/reference
+  - type: Documentation
+    url: https://developer.clearslide.com/docs/introduction
+  - type: GettingStarted
+    url: https://developer.clearslide.com/docs/getting-started-1
+- aid: clearslide:clearslide-meetings-api
+  name: ClearSlide Meetings API
+  description: The Meetings API from ClearSlide — 2 operation(s) for meetings.
+  humanURL: https://developer.clearslide.com/
+  baseURL: https://platform.clearslide.com
+  tags:
+  - Meetings
+  properties:
+  - type: OpenAPI
+    url: openapi/clearslide-meetings-api-openapi.yml
+  - type: APIReference
+    url: https://developer.clearslide.com/reference
+  - type: Documentation
+    url: https://developer.clearslide.com/docs/introduction
+  - type: GettingStarted
+    url: https://developer.clearslide.com/docs/getting-started-1
+- aid: clearslide:clearslide-presentations-api
+  name: ClearSlide Presentations API
+  description: The Presentations API from ClearSlide — 1 operation(s) for presentations.
+  humanURL: https://developer.clearslide.com/
+  baseURL: https://platform.clearslide.com
+  tags:
+  - Presentations
+  properties:
+  - type: OpenAPI
+    url: openapi/clearslide-presentations-api-openapi.yml
+  - type: APIReference
+    url: https://developer.clearslide.com/reference
+  - type: Documentation
+    url: https://developer.clearslide.com/docs/introduction
+  - type: GettingStarted
+    url: https://developer.clearslide.com/docs/getting-started-1
+- aid: clearslide:clearslide-upload-api
+  name: ClearSlide Upload API
+  description: The Upload API from ClearSlide — 2 operation(s) for upload.
+  humanURL: https://developer.clearslide.com/
+  baseURL: https://platform.clearslide.com
+  tags:
+  - Upload
+  properties:
+  - type: OpenAPI
+    url: openapi/clearslide-upload-api-openapi.yml
+  - type: APIReference
+    url: https://developer.clearslide.com/reference
+  - type: Documentation
+    url: https://developer.clearslide.com/docs/introduction
+  - type: GettingStarted
+    url: https://developer.clearslide.com/docs/getting-started-1
+- aid: clearslide:clearslide-users-api
+  name: ClearSlide Users API
+  description: The Users API from ClearSlide — 1 operation(s) for users.
+  humanURL: https://developer.clearslide.com/
+  baseURL: https://platform.clearslide.com
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/clearslide-users-api-openapi.yml
+  - type: APIReference
+    url: https://developer.clearslide.com/reference
+  - type: Documentation
+    url: https://developer.clearslide.com/docs/introduction
+  - type: GettingStarted
+    url: https://developer.clearslide.com/docs/getting-started-1
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+common:
+- type: DeveloperPortal
+  url: https://developer.clearslide.com/
+- type: Documentation
+  url: https://developer.clearslide.com/docs/introduction
+- type: APIReference
+  url: https://developer.clearslide.com/reference
+- type: GettingStarted
+  url: https://developer.clearslide.com/docs/getting-started-1
+- type: ChangeLog
+  url: https://developer.clearslide.com/changelog
+- type: Support
+  url: https://developer.clearslide.com/discuss
+- type: Login
+  url: https://www.clearslide.com/auth/login
+- type: TermsOfService
+  url: https://www.clearslide.com/legal/terms/
+- type: PrivacyPolicy
+  url: https://www.clearslide.com/legal/privacy/
+- type: LLMsTxt
+  url: llms/clearslide-llms.txt
+- type: OpenAPI
+  url: openapi/clearslide-openapi.yml
+- type: Overlay
+  url: overlays/clearslide-openapi-overlay.yaml
+- type: Authentication
+  url: authentication/clearslide-authentication.yml
+- type: OAuthScopes
+  url: scopes/clearslide-scopes.yml
+- type: Conventions
+  url: conventions/clearslide-conventions.yml
+- type: Lifecycle
+  url: lifecycle/clearslide-lifecycle.yml
+- type: Conformance
+  url: conformance/clearslide-conformance.yml
+- type: Compliance
+  url: https://www.clearslide.com/about/security/
+- type: VulnerabilityDisclosure
+  url: security/clearslide-vulnerability-disclosure.yml
+- type: Security
+  url: https://www.clearslide.com/about/security/
+- type: DomainSecurity
+  url: security/clearslide-domain-security.yml
+- type: WellKnown
+  url: well-known/clearslide-well-known.yml
+- type: MCPServer
+  url: mcp/clearslide-mcp.yml
+- type: DataModel
+  url: data-model/clearslide-data-model.yml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

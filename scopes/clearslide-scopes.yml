@@ -1,0 +1,31 @@
+generated: '2026-07-18'
+method: searched
+source: openapi/clearslide-openapi.yml
+docs: https://developer.clearslide.com/docs/oauth-20
+schemes:
+- name: oauth2
+  source: openapi/clearslide-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://oauth.platform.clearslide.com/oauth/authorize
+    tokenUrl: https://oauth.platform.clearslide.com/oauth/token
+  - flow: password
+    tokenUrl: https://oauth.platform.clearslide.com/oauth/token
+  description: ClearSlide supports OAuth 2.0 Authorization Code (RFC 6749 §4.1) and Resource
+    Owner Password Credentials (RFC 6749 §4.3) grants. Register a client redirect URL with apisupport@clearslide.com
+    to receive a client id and client secret.
+scopes:
+- scope: read
+  description: Read access to ClearSlide resources
+  flows:
+  - authorizationCode
+  - password
+  sources:
+  - openapi/clearslide-openapi.yml
+- scope: write
+  description: Write access to ClearSlide resources
+  flows:
+  - authorizationCode
+  - password
+  sources:
+  - openapi/clearslide-openapi.yml

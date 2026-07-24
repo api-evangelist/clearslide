@@ -1,0 +1,36 @@
+# ClearSlide API Documentation
+
+> Documentation for ClearSlide API
+
+## Guides
+- [Overview](https://developer.clearslide.com/docs/getting-started-1.md): Getting your development application & sandbox environment(s)
+- [What's New](https://developer.clearslide.com/docs/whats-new.md): Learn about what's new in the ClearSlide Platform
+- [OAuth 2.0](https://developer.clearslide.com/docs/oauth-20.md)
+- [APIs Overview](https://developer.clearslide.com/docs/introduction.md)
+- [Presentations API Overview](https://developer.clearslide.com/docs/presentation-overview.md): ClearSlide APIs
+- [Links API Overview](https://developer.clearslide.com/docs/links-overview.md): ClearSlide APIs
+- [Insights API Overview](https://developer.clearslide.com/docs/insights-overview.md): ClearSlide APIs
+- [Users API Overview](https://developer.clearslide.com/docs/users-overview.md): ClearSlide APIs
+- [Upload APIs](https://developer.clearslide.com/docs/upload-api.md): ClearSlide APIs
+- [Upload File Credentials API Overview](https://developer.clearslide.com/docs/upload-api-overview-1.md)
+- [Upload File to Amazon S3](https://developer.clearslide.com/docs/upload-file-to-amazon-s3.md)
+- [Upload Status API Overview](https://developer.clearslide.com/docs/upload-status-api-overview-1.md)
+- [Sample Endpoint Application](https://developer.clearslide.com/docs/sample-endpoint-application.md)
+- [SCIM at ClearSlide](https://developer.clearslide.com/docs/scim-at-clearslide.md)
+- [Scheduled Meetings API Overview](https://developer.clearslide.com/docs/scheduled-meetings-api-overview.md): ClearSlide APIs
+- [Buttons Overview](https://developer.clearslide.com/docs/buttons-overview.md)
+- [Launch Meeting button](https://developer.clearslide.com/docs/launch-meeting.md): Embeddable Button
+- [Compose Email button](https://developer.clearslide.com/docs/compose-email.md): Embeddable Button
+- [Create Link button](https://developer.clearslide.com/docs/create-link.md): Embeddable Button
+- [Glossary](https://developer.clearslide.com/docs/glossary.md): Definitions of common terms used with the ClearSlide API.
+
+## API Reference
+- [/presentations](https://developer.clearslide.com/reference/get_presentations.md): Returns a list of `presentation` objects that match query criteria. Returned list of objects by default is sorted descending by `dateModified` and paginated with default page size 100.
+- [/links](https://developer.clearslide.com/reference/post_links.md): Creates a trackable link for a presentation.
+- [/insights](https://developer.clearslide.com/reference/get_insights.md): Get statistics for particular sent pitch
+- [/users](https://developer.clearslide.com/reference/get_users.md): Returns a list of `user` objects that match query criteria. Returned list of objects
+- [/upload](https://developer.clearslide.com/reference/post_upload.md): Get credentials to upload your file to ClearSlide.
+- [/upload/{uploadID}](https://developer.clearslide.com/reference/get_upload-uploadid.md): Check the status of uploaded file
+- [/meeting/scheduled](https://developer.clearslide.com/reference/get_meeting-scheduled.md): List all scheduled meetings
+- [/meeting/scheduled](https://developer.clearslide.com/reference/post_meeting-scheduled.md): Reserves a temporary Scheduled Meeting
+- [/meeting/scheduled/{inviteMailVid}](https://developer.clearslide.com/reference/put_meeting-scheduled-invitemailvid.md): Updates existing sheduled meeting, to make meeting active/cancelled set status to ACTIVE/CANCELLED

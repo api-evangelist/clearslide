@@ -1,0 +1,12 @@
+generated: '2026-07-18'
+method: searched
+source: https://developer.clearslide.com/changelog
+scheme: readme-changelog
+current_version: v2.0.0
+url: https://developer.clearslide.com/changelog
+whats_new: https://developer.clearslide.com/docs/whats-new
+entries: []
+notes: >-
+  ClearSlide publishes a dated developer changelog via its ReadMe portal (developer.clearslide.com/changelog)
+  and a "What's New" page. Individual dated entries were not transcribed in this pass; the live
+  changelog is the source of truth.

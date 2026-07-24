@@ -1,0 +1,171 @@
+# generated: '2026-07-18'
+# method: searched
+# source: https://developer.clearslide.com/reference and https://developer.clearslide.com/llms.txt
+# Note: Operation paths, methods, summaries, and OAuth flows are transcribed verbatim from
+# ClearSlide's published ReadMe developer portal. Request/response schemas are intentionally
+# left minimal (not fabricated) — only path parameters that appear literally in the URL are declared.
+openapi: 3.1.0
+info:
+  title: ClearSlide Platform API
+  version: 2.0.0
+  description: >-
+    ClearSlide Public APIs give customers and partners programmatic access to core ClearSlide
+    features, including uploading content, listing presentations, creating trackable links,
+    getting engagement insights, listing users, and hosting scheduled meetings. Transcribed
+    from the public ClearSlide developer portal (ReadMe). ClearSlide is a Bigtincan sales
+    engagement platform.
+  contact:
+    name: ClearSlide API Support
+    email: apisupport@clearslide.com
+    url: https://developer.clearslide.com/
+  termsOfService: https://www.clearslide.com/legal/terms/
+servers:
+  - url: https://platform.clearslide.com
+    description: ClearSlide Platform API (production)
+security:
+  - oauth2: [read, write]
+tags:
+  - name: Presentations
+  - name: Links
+  - name: Insights
+  - name: Users
+  - name: Upload
+  - name: Meetings
+paths:
+  /presentations:
+    get:
+      operationId: getPresentations
+      tags: [Presentations]
+      summary: List presentations
+      description: >-
+        Returns a list of `presentation` objects that match query criteria. Returned list of
+        objects by default is sorted descending by `dateModified` and paginated with default
+        page size 100.
+      security:
+        - oauth2: [read]
+      responses:
+        '200':
+          description: A list of presentation objects.
+  /links:
+    post:
+      operationId: postLinks
+      tags: [Links]
+      summary: Create a trackable link
+      description: Creates a trackable link for a presentation.
+      security:
+        - oauth2: [write]
+      responses:
+        '200':
+          description: The created trackable link.
+  /insights:
+    get:
+      operationId: getInsights
+      tags: [Insights]
+      summary: Get insights for a sent pitch
+      description: Get statistics for a particular sent pitch.
+      security:
+        - oauth2: [read]
+      responses:
+        '200':
+          description: Engagement statistics for the pitch.
+  /users:
+    get:
+      operationId: getUsers
+      tags: [Users]
+      summary: List users
+      description: Returns a list of `user` objects that match query criteria.
+      security:
+        - oauth2: [read]
+      responses:
+        '200':
+          description: A list of user objects.
+  /upload:
+    post:
+      operationId: postUpload
+      tags: [Upload]
+      summary: Get upload credentials
+      description: Get credentials to upload your file to ClearSlide (Amazon S3).
+      security:
+        - oauth2: [write]
+      responses:
+        '200':
+          description: Temporary upload credentials.
+  /upload/{uploadID}:
+    get:
+      operationId: getUploadStatus
+      tags: [Upload]
+      summary: Check upload status
+      description: Check the status of an uploaded file.
+      security:
+        - oauth2: [read]
+      parameters:
+        - name: uploadID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Upload status.
+  /meeting/scheduled:
+    get:
+      operationId: getScheduledMeetings
+      tags: [Meetings]
+      summary: List scheduled meetings
+      description: List all scheduled meetings.
+      security:
+        - oauth2: [read]
+      responses:
+        '200':
+          description: A list of scheduled meetings.
+    post:
+      operationId: postScheduledMeeting
+      tags: [Meetings]
+      summary: Reserve a scheduled meeting
+      description: Reserves a temporary Scheduled Meeting.
+      security:
+        - oauth2: [write]
+      responses:
+        '200':
+          description: The reserved scheduled meeting.
+  /meeting/scheduled/{inviteMailVid}:
+    put:
+      operationId: putScheduledMeeting
+      tags: [Meetings]
+      summary: Update a scheduled meeting
+      description: >-
+        Updates an existing scheduled meeting; to make a meeting active or cancelled set
+        status to ACTIVE or CANCELLED.
+      security:
+        - oauth2: [write]
+      parameters:
+        - name: inviteMailVid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The updated scheduled meeting.
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: >-
+        ClearSlide supports OAuth 2.0 Authorization Code (RFC 6749 §4.1) and Resource Owner
+        Password Credentials (RFC 6749 §4.3) grants. Register a client redirect URL with
+        apisupport@clearslide.com to receive a client id and client secret.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://oauth.platform.clearslide.com/oauth/authorize
+          tokenUrl: https://oauth.platform.clearslide.com/oauth/token
+          refreshUrl: https://oauth.platform.clearslide.com/oauth/token
+          scopes:
+            read: Read access to ClearSlide resources
+            write: Write access to ClearSlide resources
+        password:
+          tokenUrl: https://oauth.platform.clearslide.com/oauth/token
+          refreshUrl: https://oauth.platform.clearslide.com/oauth/token
+          scopes:
+            read: Read access to ClearSlide resources
+            write: Write access to ClearSlide resources

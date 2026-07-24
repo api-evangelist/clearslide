@@ -1,0 +1,34 @@
+generated: '2026-07-18'
+method: searched
+source: https://developer.clearslide.com/
+authentication:
+  style: oauth2-bearer
+  flows: [authorizationCode, password]
+  token_header: "Authorization: Bearer <access_token>"
+  scopes: [read, write]
+  docs: https://developer.clearslide.com/docs/oauth-20
+  cross_ref: authentication/clearslide-authentication.yml
+idempotency:
+  supported: false
+  notes: No idempotency-key contract is documented on the ClearSlide developer portal.
+pagination:
+  style: page-based
+  documented: true
+  notes: >-
+    List endpoints (e.g. /presentations, /users) return objects paginated with a default page
+    size of 100; /presentations is sorted descending by dateModified by default.
+    Exact query parameter names are not transcribed here to avoid fabrication.
+  cross_ref: openapi/clearslide-openapi.yml
+versioning:
+  style: portal-version
+  current: v2.0.0
+  cross_ref: lifecycle/clearslide-lifecycle.yml
+error_envelope:
+  documented: false
+rate_limiting:
+  documented: false
+uploads:
+  style: s3-presigned
+  notes: >-
+    File uploads use a two-step flow: POST /upload returns temporary credentials to upload the
+    file directly to Amazon S3, then GET /upload/{uploadID} checks status.

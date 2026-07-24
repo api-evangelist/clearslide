@@ -1,0 +1,36 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/clearslide-openapi.yml
+entities:
+  - name: Presentation
+    description: A piece of content (deck) hosted in ClearSlide.
+    operations: [getPresentations]
+  - name: Link
+    description: A trackable link created for a presentation.
+    operations: [postLinks]
+    relationships:
+      - type: belongs_to
+        target: Presentation
+        via: presentation
+  - name: Insight
+    description: Engagement statistics for a sent pitch.
+    operations: [getInsights]
+    relationships:
+      - type: belongs_to
+        target: Link
+        via: pitch
+  - name: User
+    description: A ClearSlide user account.
+    operations: [getUsers]
+  - name: Upload
+    description: A file upload session (S3 credentials + status).
+    operations: [postUpload, getUploadStatus]
+    id_field: uploadID
+  - name: Meeting
+    description: A scheduled ClearSlide meeting.
+    operations: [getScheduledMeetings, postScheduledMeeting, putScheduledMeeting]
+    id_field: inviteMailVid
+notes: >-
+  Relationships inferred from the documented product model (links are created for presentations,
+  insights report on sent pitches). Field-level id references were not transcribed from schemas
+  (the ReadMe portal does not expose a downloadable OpenAPI with component schemas).

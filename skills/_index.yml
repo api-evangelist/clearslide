@@ -1,0 +1,11 @@
+generated: '2026-07-18'
+method: generated
+skills:
+  - file: clearslide-share-and-track.md
+    name: Share a presentation and track engagement
+    api: openapi/clearslide-openapi.yml
+    operations: [getPresentations, postLinks, getInsights]
+  - file: clearslide-upload-content.md
+    name: Upload content to ClearSlide
+    api: openapi/clearslide-openapi.yml
+    operations: [postUpload, getUploadStatus]

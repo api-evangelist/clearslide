@@ -1,0 +1,18 @@
+generated: '2026-07-18'
+method: searched
+source: https://developer.clearslide.com/
+versioning:
+  scheme: readme-version
+  current: v2.0.0
+  docs: https://developer.clearslide.com/docs/whats-new
+changelog: https://developer.clearslide.com/changelog
+deprecation:
+  policy_url: null
+  sunset_header: false
+sla:
+  url: null
+status_page: null
+notes: >-
+  status.clearslide.com redirects to the Atlassian Statuspage product page rather than a live
+  ClearSlide status page, so no StatusPage pointer is emitted. No formal deprecation/Sunset
+  policy is published on the developer portal.
