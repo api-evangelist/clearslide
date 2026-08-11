@@ -166,7 +166,7 @@ common:
 - type: LLMsTxt
   url: llms/clearslide-llms.txt
 - type: OpenAPI
-  url: openapi/clearslide-openapi.yml
+  url: openapi/_original/clearslide-openapi.yml
 - type: Overlay
   url: overlays/clearslide-openapi-overlay.yaml
 - type: Authentication
