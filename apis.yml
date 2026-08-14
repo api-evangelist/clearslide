@@ -41,7 +41,7 @@ tags:
 - SCIM
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-18'
+modified: '2026-08-13'
 apis:
 - aid: clearslide:clearslide-insights-api
   name: ClearSlide Insights API
@@ -139,6 +139,30 @@ apis:
     url: https://developer.clearslide.com/docs/introduction
   - type: GettingStarted
     url: https://developer.clearslide.com/docs/getting-started-1
+- aid: clearslide:clearslide-scim-api
+  name: ClearSlide SCIM API
+  description: >-
+    ClearSlide's SCIM 2.0 (RFC 7644) user and group provisioning API, for automating directory
+    sync from an identity provider. Serves /scim/ServiceProviderConfigs, /scim/Schemas (core User
+    and Group), full /scim/Users and /scim/Groups CRUD, and PatchOp for group membership. Note
+    PATCH on Users is documented as not supported, filtering is limited to the `eq` operator on
+    userName, and DELETE deactivates rather than deletes. Documented in prose only — ClearSlide
+    publishes no machine-readable contract for this surface.
+  humanURL: https://developer.clearslide.com/docs/scim-at-clearslide
+  baseURL: https://platform.clearslide.com/v2
+  tags:
+  - SCIM
+  - Users
+  - Groups
+  - Provisioning
+  - Identity
+  properties:
+  - type: Documentation
+    url: https://developer.clearslide.com/docs/scim-at-clearslide
+  - type: Authentication
+    url: authentication/clearslide-authentication.yml
+  - type: Conformance
+    url: conformance/clearslide-conformance.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -195,8 +219,34 @@ common:
   url: data-model/clearslide-data-model.yml
 - type: AgentSkill
   url: skills/_index.yml
+- type: OpenAPI
+  url: openapi/_original/clearslide-platform-api-swagger.json
+- type: Overlay
+  url: overlays/clearslide-platform-api-swagger-overlay.yaml
+- type: Packages
+  url: packages/clearslide-packages.yml
+- type: ErrorCatalog
+  url: errors/clearslide-problem-types.yml
+- type: RateLimits
+  url: rate-limits/clearslide-rate-limits.yml
+- type: Plans
+  url: plans/clearslide-plans-pricing.yml
+- type: Components
+  url: components/clearslide-components.yml
+- type: GitHubOrganization
+  url: https://github.com/ClearSlide
+- type: Pricing
+  url: https://www.clearslide.com/pricing/
+- type: SignUp
+  url: https://www.clearslide.com/freetrial
+- type: Blog
+  url: https://www.clearslide.com/blog/
 x-enrichment:
-  date: '2026-07-19'
-  status: backfilled
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 8
   pass: local-v1
-  note: backfilled from .gitignore signal + verified work evidence
+  note: >-
+    Contract discovery found a provider-published Swagger 2.0 document (41 schema definitions) at
+    docs.platform.clearslide.com/clearslide-api.json — the redirect target of the API host — plus a
+    real RFC 9727 api-catalog on the developer portal. Both were missed by prior rounds.
