@@ -1,0 +1,128 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/_original/clearslide-platform-api-swagger.json
+docs: https://developer.clearslide.com/docs/whats-new
+format: json-api-errors
+summary: >-
+  ClearSlide does NOT use RFC 9457 problem+json. The Platform API is a JSON:API-flavoured
+  surface (produces application/vnd.api+json) and ships three distinct error shapes across
+  its six documented operations, plus a fourth envelope emitted by the AWS API Gateway edge
+  and a fifth by the Spring Security OAuth server. The inconsistency is the finding.
+envelopes:
+- id: simple-error
+  schema: error / Error
+  media_type: application/vnd.api+json
+  shape:
+    code: integer (int32)
+    message: string
+  used_by:
+  - GET /presentations -> 404
+  - GET /users -> 404
+  - POST /links -> 404
+  note: >-
+    Both `error` and `Error` are declared as separate definitions in the spec with identical
+    properties — a duplicate-schema defect. Neither `code` nor `message` carries a real
+    description in the published spec; both read "tbd".
+- id: constraint-violation
+  schema: ConstraintViolation
+  media_type: application/vnd.api+json
+  shape:
+    status: integer (int32)
+    title: string
+    source:
+      pointer: string
+  used_by:
+  - POST /links -> 422
+  note: >-
+    JSON:API error-object shape. `source.pointer` is a JSON Pointer at the offending member of
+    the request document, which is the only field-level error localisation ClearSlide publishes.
+- id: upload-error-response
+  schema: uploadErrorResponse
+  media_type: application/vnd.api+json
+  shape:
+    errors:
+    - detail: string
+      status: string
+      title: string
+  used_by:
+  - POST /upload -> 400, 403, 500
+  - GET /upload/{uploadID} -> 400, 403, 500
+  note: >-
+    The only envelope that is a true JSON:API `errors[]` array. Note `status` is a STRING here
+    and an INTEGER in constraint-violation — the same concept typed two ways in one API.
+- id: aws-api-gateway-edge
+  schema: null
+  media_type: application/json
+  shape:
+    message: string
+  used_by:
+  - any request to platform.clearslide.com without a valid token
+  observed:
+    url: https://platform.clearslide.com/presentations
+    status: 401
+    body: '{"message":"Unauthorized"}'
+    headers:
+      x-amzn-errortype: UnauthorizedException
+  method: probed
+  note: >-
+    Emitted by AWS API Gateway before ClearSlide application code runs, so it is undocumented in
+    the spec and does not match any declared schema. An agent must handle it separately.
+- id: spring-oauth-error
+  schema: null
+  media_type: application/json;charset=UTF-8
+  shape:
+    timestamp: integer (epoch ms)
+    status: integer
+    error: string
+    message: string
+    path: string
+  used_by:
+  - POST https://oauth.platform.clearslide.com/oauth/token without HTTP Basic credentials
+  observed:
+    url: https://oauth.platform.clearslide.com/oauth/token
+    status: 401
+    www_authenticate: Basic realm="oauth2/client"
+  method: probed
+  note: Standard Spring Security error body; a fifth distinct shape on the same platform.
+problem_types:
+- status: 400
+  title: Bad Request
+  envelope: upload-error-response
+  operations: [POST /upload, "GET /upload/{uploadID}"]
+- status: 401
+  title: Unauthorized
+  envelope: aws-api-gateway-edge
+  operations: [all]
+  remediation: >-
+    Obtain an OAuth 2.0 token per developer.clearslide.com/docs/oauth-20 and pass it in the
+    `authorizationToken` header (NOT `Authorization: Bearer`) for Platform API calls.
+- status: 403
+  title: Forbidden
+  envelope: upload-error-response
+  operations: [POST /upload, "GET /upload/{uploadID}"]
+- status: 404
+  title: failure
+  envelope: simple-error
+  operations: [GET /presentations, GET /users, POST /links]
+- status: 422
+  title: constraint violation
+  envelope: constraint-violation
+  operations: [POST /links]
+  remediation: Read `source.pointer` to find the offending member of the submitted link document.
+- status: 500
+  title: Internal Server Error
+  envelope: upload-error-response
+  operations: [POST /upload, "GET /upload/{uploadID}"]
+gaps:
+- >-
+  GET /insights declares only a 200 response. No error responses are documented for it at all,
+  so an agent has no contract for insight failures.
+- >-
+  No named/enumerated application error codes are published anywhere — the `code` integer in the
+  simple-error envelope has no registry, and its spec description is literally "tbd".
+- >-
+  No RFC 9457 application/problem+json, and no `type` URI on any error object.
+notes: >-
+  ClearSlide's "What's New" page records "Added more informative responses for HTTP errors" as a
+  recent platform change, which is consistent with the richer upload/constraint envelopes sitting
+  alongside the older bare {code,message} shape.

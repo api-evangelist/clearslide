@@ -1,0 +1,64 @@
+generated: '2026-08-13'
+method: probed
+source: >-
+  Full sweep of developer.clearslide.com documentation (llms.txt index + every guide page) plus
+  live unauthenticated probes of platform.clearslide.com and oauth.platform.clearslide.com
+limit_count: 0
+documented: false
+summary: >-
+  ClearSlide publishes NO rate limits for its Platform API. No guide page, no reference page and
+  no page in the llms.txt index mentions a rate limit, throttle, quota or 429. Live probes of the
+  API host return no rate-limit headers of any kind.
+limits: []
+response_headers:
+  api_host:
+    host: platform.clearslide.com
+    ratelimit_headers: []
+    retry_after: false
+    exhaustion_status: null
+    observed:
+      url: https://platform.clearslide.com/presentations
+      status: 401
+      headers_present:
+      - content-type
+      - server
+      - x-amzn-requestid
+      - x-amzn-errortype
+      note: >-
+        AWS API Gateway fronts the API (x-amzn-errortype: UnauthorizedException). API Gateway
+        supports usage plans with throttling, but ClearSlide exposes no X-RateLimit-*, RateLimit-*
+        or Retry-After header on the unauthenticated path, and documents no plan.
+  oauth_host:
+    host: oauth.platform.clearslide.com
+    ratelimit_headers: []
+    observed:
+      url: https://oauth.platform.clearslide.com/oauth/token
+      status: 401
+      note: Spring Security OAuth server; no rate-limit headers returned.
+adjacent_signal:
+  host: developer.clearslide.com
+  applies_to: documentation portal only — NOT the API
+  ratelimit_headers:
+  - x-ratelimit-limit
+  - x-ratelimit-remaining
+  - x-ratelimit-reset
+  observed:
+    url: https://developer.clearslide.com/openapi/596567bd798ff70035f1c6bf
+    status: 200
+    x_ratelimit_limit: 100
+    x_ratelimit_remaining: 99
+  note: >-
+    These headers are emitted by ReadMe, the third-party platform hosting ClearSlide's docs, and
+    govern documentation fetches. They are recorded here only to be explicit that they are NOT the
+    API's limits and must not be read as such. A separate probe against the same host returned
+    HTTP 429 under modest request volume, so the docs portal does throttle.
+findings:
+- >-
+  An agent integrating ClearSlide has no published backoff contract: it cannot know its budget
+  before it starts, and gets no runtime signal (no headers, no documented 429) when it exhausts it.
+- >-
+  The only observable throttling on any ClearSlide-branded host belongs to the documentation
+  vendor, not to ClearSlide's API.
+notes: >-
+  limit_count is an honest zero: checked across docs and live probes, nothing to record. Absence
+  of published limits is the measurement, not a gap in this pass.

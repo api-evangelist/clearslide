@@ -1,0 +1,73 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  npm registry search, PyPI, RubyGems, Packagist, crates.io, GitHub org github.com/ClearSlide,
+  and the ClearSlide developer portal SDK/sample pages
+package_count: 0
+packages: []
+registries_searched:
+- registry: npm
+  query: clearslide
+  url: https://registry.npmjs.org/-/v1/search?text=clearslide
+  status: 200
+  results: 0
+- registry: pypi
+  query: clearslide
+  url: https://pypi.org/pypi/clearslide/json
+  status: 404
+  results: 0
+- registry: rubygems
+  query: clearslide
+  url: https://rubygems.org/api/v1/search.json?query=clearslide
+  status: 200
+  results: 0
+- registry: packagist
+  query: clearslide
+  url: https://packagist.org/search.json?q=clearslide
+  status: 200
+  results: 0
+  note: Matches returned were unrelated ("clearidea/*"), none first-party.
+- registry: crates.io
+  query: clearslide
+  url: https://crates.io/api/v1/crates?q=clearslide
+  status: 200
+  results: 0
+source_code:
+- org: https://github.com/ClearSlide
+  status: 200
+  name: ClearSlide, Inc.
+  created: '2013-01-09'
+  public_repos: 3
+  official: true
+  repos:
+  - name: Fantastic-Transcoder
+    url: https://github.com/ClearSlide/Fantastic-Transcoder
+    description: Video transcoder built on internal ClearSlide infrastructure.
+    api_client: false
+  - name: fake-statsd
+    url: https://github.com/ClearSlide/fake-statsd
+    description: Ruby script for inspecting statsd packets.
+    api_client: false
+  - name: curl
+    url: https://github.com/ClearSlide/curl
+    description: curl in a docker container.
+    api_client: false
+  note: >-
+    The GitHub organisation is genuinely ClearSlide's, but none of its three public repositories
+    is an API client library. They are internal-tooling releases, not SDKs.
+findings:
+- >-
+  ClearSlide ships NO first-party client library in any public package registry, in any language.
+  This is a real zero, verified across six registries, not an unchecked gap.
+- >-
+  The only integration code ClearSlide publishes is an inline Python sample script on
+  developer.clearslide.com/docs/sample-endpoint-application demonstrating the two-step upload
+  flow. It is a documentation snippet — unversioned, unpackaged, not installable — and is
+  written in Python 2 (`print "authURL = "`), which reached end of life in 2020.
+- >-
+  Because there is no published package anywhere, there is no release date to read and therefore
+  no SDK decay signal available for this provider. The absence itself is the signal.
+notes: >-
+  No `SDKs` pointer is emitted in apis.yml: the sdk_count checks assert the provider ships client
+  libraries, and ClearSlide ships none. A `GitHubOrganization` pointer IS emitted, because the
+  organisation is real and first-party.

@@ -1,36 +1,261 @@
-generated: '2026-07-18'
+generated: '2026-08-13'
 method: derived
-source: openapi/clearslide-openapi.yml
+source: openapi/_original/clearslide-platform-api-swagger.json
+docs: https://developer.clearslide.com/docs/glossary
+summary: >-
+  Entity-relationship graph derived from the 41 schema definitions in ClearSlide's published
+  Swagger 2.0 document, harvested 2026-08-13. This replaces the previous placeholder model, which
+  was inferred from prose because no schema-bearing spec had been found. Relationships are read
+  from $ref links and from id-reference fields (userId, ownerId, deckID/deckVID, teamId, groupId).
+identifiers:
+  vid:
+    description: >-
+      ClearSlide's pervasive external identifier, exposed as `vid`, `deckVID`, `presenterVID`,
+      `userVID` and `inviteMailVid`. Opaque uppercase alphanumeric strings (e.g. the SCIM docs
+      show group ids like D9ZRBJBNPZFET87A2S67).
+    note: >-
+      The API consistently exposes a `vid` external id alongside an internal numeric id
+      (InsightsDeck carries BOTH `deckID` as an integer and `vid` as a string for the same deck).
+      Callers must use the external id; the internal one leaks through the Insights payload.
+  no_prefixes: >-
+    ClearSlide ids carry no type prefix, so an id is not self-describing and cannot be routed to
+    its entity without knowing the field it came from.
 entities:
-  - name: Presentation
-    description: A piece of content (deck) hosted in ClearSlide.
-    operations: [getPresentations]
-  - name: Link
-    description: A trackable link created for a presentation.
-    operations: [postLinks]
-    relationships:
-      - type: belongs_to
-        target: Presentation
-        via: presentation
-  - name: Insight
-    description: Engagement statistics for a sent pitch.
-    operations: [getInsights]
-    relationships:
-      - type: belongs_to
-        target: Link
-        via: pitch
-  - name: User
-    description: A ClearSlide user account.
-    operations: [getUsers]
-  - name: Upload
-    description: A file upload session (S3 credentials + status).
-    operations: [postUpload, getUploadStatus]
-    id_field: uploadID
-  - name: Meeting
-    description: A scheduled ClearSlide meeting.
-    operations: [getScheduledMeetings, postScheduledMeeting, putScheduledMeeting]
-    id_field: inviteMailVid
-notes: >-
-  Relationships inferred from the documented product model (links are created for presentations,
-  insights report on sent pitches). Field-level id references were not transcribed from schemas
-  (the ReadMe portal does not expose a downloadable OpenAPI with component schemas).
+- name: Presentation
+  aka: [deck]
+  schema: presentation
+  description: A piece of content (deck) hosted in ClearSlide.
+  operations: [GET /presentations]
+  id_field: id
+  fields:
+    required: [id, name, userId, dateCreated, dateModified, bookmarked, archived, tags, livePitchCount, emailPitchCount, group]
+    optional: [thumbnailUrls, previewUrls]
+  relationships:
+  - type: belongs_to
+    target: User
+    via: userId
+    description: The ID of the user who owns the presentation.
+  - type: belongs_to
+    target: Group
+    via: group
+    description: The group this presentation belongs to.
+  counters: [livePitchCount, emailPitchCount]
+- name: Link
+  aka: [trackable link, pitch]
+  schema: links -> data -> CreatedLink
+  description: A trackable link created for one or more presentations.
+  operations: [POST /links]
+  id_field: id
+  request_shape:
+    envelope: 'links.data { type: "links", attributes: {...} }'
+    required_attributes: [sendViewAlerts, presentationIds, userId, internalPitch, company, recipientName, downloadOption, expiration, allowViewerFeedback]
+  response_shape:
+    schema: CreatedLink
+    attributes: [viewerLink, previewLink]
+  relationships:
+  - type: has_many
+    target: Presentation
+    via: presentationIds
+    description: A link may bundle a list of target presentations.
+  - type: belongs_to
+    target: User
+    via: userId
+  - type: has_one
+    target: Company
+    via: company
+  - type: has_one
+    target: DownloadOption
+    via: downloadOption
+  - type: has_one
+    target: Expiration
+    via: expiration
+- name: Company
+  schema: Company
+  description: The CRM object a link, email or meeting is mapped to.
+  embedded_in: [Link]
+  fields:
+    required: [companyName, companyCrmId, companyCrmType]
+  note: >-
+    companyCrmType names the external CRM object type (the spec gives 'Case' and 'Campaign' as
+    examples), making this the CRM join point across the whole product.
+- name: DownloadOption
+  schema: DownloadOption
+  description: Per-link download policy.
+  embedded_in: [Link]
+  fields:
+    required: [enabled, linkLocation, downloadOriginalFormat]
+  defaults: {enabled: false}
+- name: Expiration
+  schema: Expiration
+  description: Per-link expiry policy.
+  embedded_in: [Link]
+  fields:
+    required: [enabled, expirationPeriod]
+  defaults: {enabled: false}
+- name: Insight
+  aka: [pitch statistic]
+  schema: Insights -> InsightsAttribute
+  description: >-
+    Engagement statistics for one sent pitch. A polymorphic entity — the same object describes a
+    LINK, an EMAIL or a MEETING, with a different subset of its ~40 attributes populated per type.
+  operations: [GET /insights]
+  id_field: id
+  discriminator: type
+  variants:
+  - type: LINK
+    fields: [numViewers, numClicks, hasLeadForm, lastViewer]
+  - type: EMAIL
+    fields: [numEmailOpened, subject, emailRecipients]
+  - type: MEETING
+    fields: [minutes, seconds, hostedBy, attendees, recordings, hasRecording, recordingCount, totalViewers, startDate, presenterVID, meetingType]
+  relationships:
+  - type: has_many
+    target: Presentation
+    via: decks
+    description: InsightsDeck carries deckID (internal), vid (external), name, numSlides.
+  - type: has_one
+    target: InsightsLastViewer
+    via: lastViewer
+  - type: has_many
+    target: InsightsAttendees
+    via: attendees
+  - type: has_many
+    target: InsightsEmailRecipients
+    via: emailRecipients
+  - type: has_many
+    target: Recording
+    via: recordings
+  - type: has_many
+    target: EngagementDataPoint
+    via: engagmentDataPoints
+  - type: has_many
+    target: Insight
+    via: embeddedPitchVids
+    description: Self-reference — external IDs of pitches embedded into this pitch.
+  crm_linkage: [companyCrmID, personCrmID, thirdPartyClientID, thirdPartyExternalID]
+- name: Recording
+  schema: Recordings -> Vidoes
+  description: A meeting recording holding one or more video objects.
+  embedded_in: [Insight]
+  note: >-
+    Video URLs are time-limited — each carries `urlExpiresAt`. The definition is misspelled
+    `Vidoes` in the published spec.
+- name: EngagementDataPoint
+  schema: InsightsEngagmentDataPoints
+  description: A timestamped engagement value on a pitch timeline.
+  embedded_in: [Insight]
+  fields:
+    required: [timestamp, value]
+  note: Definition name is misspelled `Engagment` in the published spec.
+- name: User
+  schema: user -> UsersAttributes
+  description: A ClearSlide user account.
+  operations: [GET /users, and the full SCIM surface at /v2/scim/Users]
+  id_field: id
+  fields:
+    required: [accountType, created, email, first_name, last_name, teamId, userStatus, user_group]
+  enums:
+    accountType: [ADMIN, GROUP_LEAD, ...]
+    userStatus: [DISABLED, ENABLED, ...]
+  relationships:
+  - type: belongs_to
+    target: Team
+    via: teamId
+  - type: has_one
+    target: Group
+    via: user_group.primary
+  - type: has_many
+    target: Group
+    via: user_group.secondary
+  note: >-
+    Field naming is inconsistent inside a single schema — `first_name`/`last_name` are snake_case
+    while `accountType`/`userStatus`/`teamId` are camelCase.
+- name: Group
+  schema: UsersPrimaryGroup / UsersSecondaryGroups
+  description: A user grouping; also a first-class SCIM resource.
+  id_field: id
+  fields: [id, groupName]
+  operations: [SCIM /v2/scim/Groups]
+- name: Team
+  description: >-
+    Referenced by User.teamId and by the SCIM docs ("all the users belong to the team"), but
+    never defined as a schema and exposed by no operation.
+  id_field: teamId
+  status: referenced-not-modelled
+- name: Upload
+  schema: upload / uploadCredentials / uploadStatus
+  description: A file upload session — credentials issuance then status polling.
+  operations: [POST /upload, "GET /upload/{uploadID}"]
+  id_field: uploadID
+  sub_entities:
+  - name: UploadCredentials
+    attributes: [fileName, fileSize, postURL, postParams, postFileParamName, postFileParamContentType, statusPath, statusParams]
+    note: >-
+      postParams carries the S3 form-POST fields (AWSAccessKeyId, acl, key, policy, signature,
+      x-amz-server-side-encryption and x-amz-meta-* metadata including userVID).
+  - name: UploadStatus
+    attributes: [deckName, deckVID, hasRichContent, isComplete, isError, status, uploadType]
+  relationships:
+  - type: has_one
+    target: Presentation
+    via: deckVID
+    description: A completed upload yields the deck it created.
+- name: Meeting
+  description: >-
+    A scheduled ClearSlide meeting, keyed by inviteMailVid. Documented on the ReadMe portal
+    (Scheduled Meetings API) but ABSENT from the published Swagger document — see divergence.
+  operations: [GET /meeting/scheduled, POST /meeting/scheduled, "PUT /meeting/scheduled/{inviteMailVid}"]
+  id_field: inviteMailVid
+  enums:
+    status: [ACTIVE, CANCELLED]
+  source: https://developer.clearslide.com/docs/scheduled-meetings-api-overview
+  status: documented-no-schema
+json_api_envelope:
+  description: >-
+    User and Upload responses follow the JSON:API resource-object shape — {type, id, attributes,
+    links{self}, relationships} — with a sibling `included` array.
+  applies_to: [User, Upload]
+  not_applied_to: [Presentation, Insight]
+  note: >-
+    The envelope is applied inconsistently. `presentation` is a flat object with no type/id/
+    attributes wrapper, while `user` is a full JSON:API resource object, in the same API, both
+    served as application/vnd.api+json. The `relationships` member is declared as a bare empty
+    object on both User and Upload, so no relationship is actually expressed through it.
+divergence:
+  summary: >-
+    Two contracts describe this API and neither is a superset of the other. Recorded so nothing is
+    silently dropped.
+  swagger_only: []
+  readme_only:
+  - GET /meeting/scheduled
+  - POST /meeting/scheduled
+  - PUT /meeting/scheduled/{inviteMailVid}
+  detail: >-
+    The published Swagger document (6 operations) carries all the schema depth but omits the
+    Meetings surface entirely. The ReadMe portal (9 operations) documents Meetings but publishes
+    no schemas. The union is 9 operations; neither source alone describes the API.
+spec_defects:
+- id: swapped-date-descriptions
+  entity: Presentation
+  detail: >-
+    `dateCreated` is described as "The last time the presentation was modified" and `dateModified`
+    as "The time when the presentation was created". The two descriptions are transposed in the
+    provider's published spec. A consumer trusting the descriptions over the field names will sort
+    and filter backwards.
+- id: placeholder-descriptions
+  entity: Insight
+  detail: >-
+    Fifteen InsightsAttribute fields carry "TDB"/"TBD" as their entire description — including
+    totalViewTimeSec, numLeads, source, style, analyticsId, avgEngagementActivity, meetingType,
+    uploadMethod and presenterVID. The richest entity in the API is also the least documented.
+- id: wrong-type
+  entity: InsightsEmailRecipients
+  detail: >-
+    `displayName` is typed integer with the description "Name of a user", and
+    `latestActivityTimestamp` is typed integer while every other timestamp in the API is a string.
+- id: misspelled-definitions
+  detail: '`Vidoes` (Videos) and `InsightsEngagmentDataPoints` (Engagement).'
+- id: unreachable-schemas
+  detail: >-
+    Presentation, Insight and User are defined in full but the 200 responses that would return
+    them are typed as bare untyped arrays, so no generated client can reach these definitions.

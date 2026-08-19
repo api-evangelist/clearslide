@@ -1,31 +1,60 @@
-generated: '2026-07-18'
+generated: '2026-08-13'
 method: searched
-source: openapi/clearslide-openapi.yml
+source: >-
+  https://docs.platform.clearslide.com/oauth2.html and https://developer.clearslide.com/docs/oauth-20
 docs: https://developer.clearslide.com/docs/oauth-20
+scope_count: 2
+granularity: coarse
 schemes:
 - name: oauth2
-  source: openapi/clearslide-openapi.yml
+  authorization_server: https://oauth.platform.clearslide.com
   flows:
   - flow: authorizationCode
     authorizationUrl: https://oauth.platform.clearslide.com/oauth/authorize
     tokenUrl: https://oauth.platform.clearslide.com/oauth/token
-  - flow: password
+  - flow: refreshToken
     tokenUrl: https://oauth.platform.clearslide.com/oauth/token
-  description: ClearSlide supports OAuth 2.0 Authorization Code (RFC 6749 §4.1) and Resource
-    Owner Password Credentials (RFC 6749 §4.3) grants. Register a client redirect URL with apisupport@clearslide.com
-    to receive a client id and client secret.
+  description: >-
+    ClearSlide supports the OAuth 2.0 Authorization Code grant (RFC 6749 §4.1) and refresh_token
+    grant. Register a client redirect URL with apisupport@clearslide.com to receive a client id
+    and client secret.
+  correction: >-
+    A `password` (Resource Owner Password Credentials) flow was recorded in the prior round. It is
+    not documented on either of ClearSlide's published OAuth pages and has been removed.
 scopes:
 - scope: read
-  description: Read access to ClearSlide resources
-  flows:
-  - authorizationCode
-  - password
+  description: Read access to ClearSlide resources.
+  flows: [authorizationCode, refreshToken]
+  observed_in: token response "scope":"read write"
   sources:
-  - openapi/clearslide-openapi.yml
+  - https://docs.platform.clearslide.com/oauth2.html
 - scope: write
-  description: Write access to ClearSlide resources
-  flows:
-  - authorizationCode
-  - password
+  description: Write access to ClearSlide resources.
+  flows: [authorizationCode, refreshToken]
+  observed_in: token response "scope":"read write"
   sources:
-  - openapi/clearslide-openapi.yml
+  - https://docs.platform.clearslide.com/oauth2.html
+scope_to_operation:
+  published: false
+  note: >-
+    ClearSlide publishes no mapping from scope to operation. The Swagger document declares no
+    securityDefinitions and no per-operation security, so which scope any given call requires is
+    undocumented. The mapping below is our reading of read-vs-write semantics, not a provider
+    statement.
+  inferred:
+  - scope: read
+    operations: [GET /presentations, GET /insights, GET /users, "GET /upload/{uploadID}", GET /meeting/scheduled]
+  - scope: write
+    operations: [POST /links, POST /upload, POST /meeting/scheduled, "PUT /meeting/scheduled/{inviteMailVid}"]
+findings:
+- >-
+  Two scopes cover the entire platform. The same `write` scope that creates a trackable link also
+  covers SCIM user and group provisioning — creating, deactivating and deleting directory users —
+  so a token issued for content sharing carries directory-administration authority.
+- >-
+  No scope is documented for the SCIM surface at all, despite it being the highest-privilege
+  surface ClearSlide exposes.
+gaps:
+- No scope reference page exists on the developer portal.
+- No incremental or step-up authorisation is documented.
+- No way for a consumer to request a reduced scope for a narrow integration.

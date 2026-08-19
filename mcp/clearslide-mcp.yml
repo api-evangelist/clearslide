@@ -1,39 +1,125 @@
-generated: '2026-07-18'
+generated: '2026-08-13'
 method: derived
 status: candidate
-source: openapi/clearslide-openapi.yml
+source: >-
+  openapi/_original/clearslide-platform-api-swagger.json and
+  openapi/_original/clearslide-openapi.yml
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: oauth
+  verified: searched
+  note: >-
+    No ClearSlide MCP server exists in any form — no hosted remote endpoint, no stdio package, no
+    registry entry. Searched npm (0 results for clearslide), PyPI, the ClearSlide GitHub
+    organisation (3 public repos, none MCP-related) and the developer portal. `mode: none` means
+    this file is a derived candidate: nobody ships a server. `auth: oauth` records what a server
+    would have to implement, not something that exists.
 server:
   name: clearslide
-  transport: http
+  transport: null
   url: null
 notes: >-
-  No official hosted ClearSlide MCP server was found. This is a candidate tool list derived
-  one-to-one from the published OpenAPI operations.
+  Candidate tool list derived from the union of ClearSlide's two published contracts. Note the
+  contracts diverge: the harvested Swagger document carries the schemas but omits Meetings, while
+  the ReadMe portal documents Meetings without schemas. Tools are marked with which source can
+  supply a real inputSchema.
+tool_count: 9
 tools:
-  - name: list_presentations
-    description: List presentation objects matching query criteria (sorted by dateModified, page size 100).
-    source_operation: openapi/clearslide-openapi.yml#getPresentations
-  - name: create_link
-    description: Create a trackable link for a presentation.
-    source_operation: openapi/clearslide-openapi.yml#postLinks
-  - name: get_insights
-    description: Get engagement statistics for a particular sent pitch.
-    source_operation: openapi/clearslide-openapi.yml#getInsights
-  - name: list_users
-    description: List user objects matching query criteria.
-    source_operation: openapi/clearslide-openapi.yml#getUsers
-  - name: get_upload_credentials
-    description: Get temporary credentials to upload a file to ClearSlide (Amazon S3).
-    source_operation: openapi/clearslide-openapi.yml#postUpload
-  - name: get_upload_status
-    description: Check the status of an uploaded file.
-    source_operation: openapi/clearslide-openapi.yml#getUploadStatus
-  - name: list_scheduled_meetings
-    description: List all scheduled meetings.
-    source_operation: openapi/clearslide-openapi.yml#getScheduledMeetings
-  - name: reserve_scheduled_meeting
-    description: Reserve a temporary scheduled meeting.
-    source_operation: openapi/clearslide-openapi.yml#postScheduledMeeting
-  - name: update_scheduled_meeting
-    description: Update an existing scheduled meeting (set status ACTIVE/CANCELLED).
-    source_operation: openapi/clearslide-openapi.yml#putScheduledMeeting
+- name: list_presentations
+  description: List presentation objects matching query, sort and filter criteria.
+  rest: GET /presentations
+  source_operation: openapi/_original/clearslide-platform-api-swagger.json#/paths/~1presentations/get
+  schema_available: true
+  scope: read
+  inputs:
+    headers: [authorizationToken, targetUserId]
+    query: ['page[size]', 'page[number]', 'sort[presentations][dateCreated]', 'sort[presentations][dateModified]', 'sort[presentations][name]', 'filter[presentations][name]', 'filter[presentations][ownerId]', 'filter[presentations][dateCreated]', 'filter[presentations][dateModified]', 'filter[presentations][bookmarked]', 'filter[presentations][groups]', 'filter[presentations][tags]']
+- name: create_link
+  description: Create a trackable link for one or more presentations.
+  rest: POST /links
+  source_operation: openapi/_original/clearslide-platform-api-swagger.json#/paths/~1links/post
+  schema_available: true
+  scope: write
+  consequence: creates a shareable external artifact; not idempotent — a retry creates a second link.
+  inputs:
+    headers: [authorizationToken]
+    body: 'links.data{type:"links", attributes:{sendViewAlerts, presentationIds, userId, internalPitch, company, recipientName, downloadOption, expiration, allowViewerFeedback}}'
+- name: get_insights
+  description: Get engagement statistics for pitches within a 24-hour window.
+  rest: GET /insights
+  source_operation: openapi/_original/clearslide-platform-api-swagger.json#/paths/~1insights/get
+  schema_available: true
+  scope: read
+  inputs:
+    headers: [authorizationToken, targetUserId]
+    query: ['filter[insights][activityDate] (REQUIRED)']
+- name: list_users
+  description: List user objects matching query criteria.
+  rest: GET /users
+  source_operation: openapi/_original/clearslide-platform-api-swagger.json#/paths/~1users/get
+  schema_available: true
+  scope: read
+  inputs:
+    headers: [authorizationToken]
+    query: ['page[size]', 'page[number]', 'filter[users][emails]']
+- name: get_upload_credentials
+  description: Get temporary Amazon S3 credentials to upload a file to ClearSlide.
+  rest: POST /upload
+  source_operation: openapi/_original/clearslide-platform-api-swagger.json#/paths/~1upload/post
+  schema_available: true
+  scope: write
+  consequence: issues short-lived AWS credentials; the actual file transfer happens outside the API.
+  inputs:
+    headers: [authorizationToken, targetUserId]
+    body: 'upload.data{type:"upload", attributes:{fileName, fileSize}}'
+- name: get_upload_status
+  description: Check the processing status of an uploaded file.
+  rest: GET /upload/{uploadID}
+  source_operation: openapi/_original/clearslide-platform-api-swagger.json#/paths/~1upload~1{uploadID}/get
+  schema_available: true
+  scope: read
+  inputs:
+    headers: [authorizationToken]
+    path: [uploadID]
+  note: Polling only — no webhook or callback fires on completion.
+- name: list_scheduled_meetings
+  description: List all scheduled meetings.
+  rest: GET /meeting/scheduled
+  source_operation: openapi/_original/clearslide-openapi.yml#getScheduledMeetings
+  schema_available: false
+  scope: read
+  note: Documented on the ReadMe portal only; absent from the published Swagger document, so no real inputSchema can be derived.
+- name: reserve_scheduled_meeting
+  description: Reserve a temporary scheduled meeting.
+  rest: POST /meeting/scheduled
+  source_operation: openapi/_original/clearslide-openapi.yml#postScheduledMeeting
+  schema_available: false
+  scope: write
+  note: Documented on the ReadMe portal only; no schema published.
+- name: update_scheduled_meeting
+  description: Update an existing scheduled meeting; set status to ACTIVE or CANCELLED.
+  rest: PUT /meeting/scheduled/{inviteMailVid}
+  source_operation: openapi/_original/clearslide-openapi.yml#putScheduledMeeting
+  schema_available: false
+  scope: write
+  note: Documented on the ReadMe portal only; no schema published.
+blockers:
+  summary: What would stop an MCP server from being usable against ClearSlide today.
+  items:
+  - >-
+    Credentials cannot be obtained programmatically. A client id and secret are issued by a human
+    replying to apisupport@clearslide.com, so no agent can self-onboard.
+  - >-
+    Tokens go in a non-standard `authorizationToken` header, so generic OAuth MCP scaffolding that
+    assumes RFC 6750 Bearer will not authenticate.
+  - >-
+    Every read of presentations and insights requires a `targetUserId` header identifying whose
+    data to return; an agent must be told this out of band.
+  - >-
+    No idempotency contract, so create_link and get_upload_credentials are unsafe to retry.
+  - >-
+    Only two coarse scopes (read/write), with `write` spanning both link creation and SCIM
+    directory administration — there is no way to grant an agent narrow authority.

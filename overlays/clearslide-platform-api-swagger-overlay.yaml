@@ -1,0 +1,102 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the harvested ClearSlide Platform API (Swagger 2.0)
+  version: 1.0.0
+extends: openapi/_original/clearslide-platform-api-swagger.json
+x-apievangelist:
+  generated: '2026-08-13'
+  method: generated
+  source: >-
+    Overlay of the provider-published Swagger 2.0 document harvested 2026-08-13 from
+    https://docs.platform.clearslide.com/clearslide-api.json (the spec URL is declared in the
+    Swagger UI bundle at that host, which platform.clearslide.com now 302s to).
+  note: >-
+    The original document is never mutated. This overlay records our enhancements and the defects
+    observed in the provider's contract so they travel with it.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-source: https://docs.platform.clearslide.com/clearslide-api.json
+    x-apievangelist-provider: clearslide
+    x-apievangelist-parent-company: Bigtincan
+    x-apievangelist-harvested: '2026-08-13'
+    x-apievangelist-ownership: >-
+      Ownership verified before saving — info.title "ClearSlide API", info.contact.email
+      apisupport@clearslide.com, host platform.clearslide.com. All three name ClearSlide, and the
+      document is served from a ClearSlide-controlled host reached by redirect from the API host.
+    x-apievangelist-defects:
+    - id: invalid-json
+      detail: >-
+        As served, the document is not valid JSON — `"host": platform.clearslide.com,` and
+        `"basePath": /,` are unquoted bare scalars, so a compliant parser rejects the file. The
+        saved copy quotes exactly those two values and changes nothing else; pristine bytes are
+        preserved at openapi/_original/clearslide-platform-api-swagger.json.orig.
+    - id: no-security-definitions
+      detail: No securityDefinitions and no security block, despite the API being OAuth 2.0 protected.
+    - id: no-operation-ids
+      detail: None of the six operations declares an operationId.
+    - id: untyped-success-responses
+      detail: >-
+        200 responses on /presentations, /links, /insights and /users are bare untyped arrays, so
+        the presentation, Insights and user definitions are unreachable from any response.
+    - id: duplicate-error-schemas
+      detail: '`error` and `Error` are separately declared with identical properties.'
+    - id: swapped-date-descriptions
+      detail: >-
+        presentation.dateCreated and presentation.dateModified carry each other's descriptions.
+    - id: misspelled-definitions
+      detail: '`Vidoes` (Videos), `InsightsEngagmentDataPoints` (Engagement).'
+    - id: placeholder-descriptions
+      detail: >-
+        Error `code`/`message` are described as "tbd"; fifteen InsightsAttribute fields are
+        described only as "TDB"/"TBD".
+- target: $.info
+  update:
+    x-agentic-access:
+      default-action-class: read
+      onboarding: human-gated
+      note: >-
+        GET operations are read/connected. POST /links and POST /upload are acting/write with
+        external consequence — a trackable link is a shareable artifact and upload credentials are
+        live AWS credentials. Neither is idempotent, so neither is safe to retry blind.
+      blockers:
+      - Credentials are issued by a human replying to apisupport@clearslide.com.
+      - Token goes in a non-standard `authorizationToken` header, not RFC 6750 Bearer.
+      - A `targetUserId` header must be supplied out of band for reads.
+- target: $.info
+  update:
+    x-apievangelist-contract-divergence: >-
+      This document covers 6 operations. ClearSlide's ReadMe portal documents 9, adding
+      GET/POST /meeting/scheduled and PUT /meeting/scheduled/{inviteMailVid}. Neither contract is a
+      superset of the other — this one has all the schema depth and no Meetings; the portal has
+      Meetings and no schemas.
+- target: $.paths['/links'].post
+  update:
+    x-idempotency:
+      supported: false
+      note: >-
+        Creates an externally shareable artifact with no idempotency key. A retry after a timeout
+        produces a second distinct trackable link.
+- target: $.paths['/upload'].post
+  update:
+    x-idempotency:
+      supported: false
+    x-side-effects: >-
+      Returns short-lived Amazon S3 credentials (AWSAccessKeyId, policy, signature) in the response
+      body. Treat the response as secret material.
+    x-flow: >-
+      Step 1 of 3 — POST /upload, then form-POST the file to the returned postURL with postParams,
+      then poll GET /upload/{uploadID}. No callback fires on completion.
+- target: $.paths['/insights'].get
+  update:
+    x-window: >-
+      filter[insights][activityDate] is REQUIRED and scopes results to the previous 24 hours from
+      the supplied date. There is no way to request a wider window in one call.
+    x-polymorphic: >-
+      One response shape serves LINK, EMAIL and MEETING activity, discriminated by `type`, with a
+      different subset of ~40 attributes populated per variant.
+- target: $.definitions.presentation
+  update:
+    x-apievangelist-warning: >-
+      dateCreated and dateModified carry transposed descriptions in the provider's spec. Trust the
+      field names, not the descriptions.

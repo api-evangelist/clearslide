@@ -1,0 +1,357 @@
+{
+  "item": [
+    {
+      "id": "82600900-bee5-45a4-a443-bfe00dac945b",
+      "name": "Meetings",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bb1cb482-df01-438a-b9f4-84086f53ede7",
+          "name": "List scheduled meetings",
+          "request": {
+            "name": "List scheduled meetings",
+            "description": {
+              "content": "List all scheduled meetings.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "meeting",
+                "scheduled"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.platform.clearslide.com/oauth/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://oauth.platform.clearslide.com/oauth/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://oauth.platform.clearslide.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "51be6c4e-1ba1-4784-8860-adfb7de3d8ed",
+              "name": "A list of scheduled meetings.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "meeting",
+                    "scheduled"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c81d8405-4301-4729-924c-6b1e4b2b2dce",
+          "name": "Reserve a scheduled meeting",
+          "request": {
+            "name": "Reserve a scheduled meeting",
+            "description": {
+              "content": "Reserves a temporary Scheduled Meeting.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "meeting",
+                "scheduled"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.platform.clearslide.com/oauth/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://oauth.platform.clearslide.com/oauth/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://oauth.platform.clearslide.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e7d2a131-0bfa-4ec0-8f69-67461040c1e1",
+              "name": "The reserved scheduled meeting.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "meeting",
+                    "scheduled"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bc65bb93-9505-41a0-bb96-11139230a1ab",
+          "name": "Update a scheduled meeting",
+          "request": {
+            "name": "Update a scheduled meeting",
+            "description": {
+              "content": "Updates an existing scheduled meeting; to make a meeting active or cancelled set status to ACTIVE or CANCELLED.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "meeting",
+                "scheduled",
+                ":inviteMailVid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "inviteMailVid",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.platform.clearslide.com/oauth/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://oauth.platform.clearslide.com/oauth/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://oauth.platform.clearslide.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a701d615-e2e7-47c9-a69e-b90d3217d15b",
+              "name": "The updated scheduled meeting.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "meeting",
+                    "scheduled",
+                    ":inviteMailVid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inviteMailVid",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://platform.clearslide.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "read write"
+      },
+      {
+        "key": "redirect_uri",
+        "value": "https://oauth.platform.clearslide.com/oauth/token"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://oauth.platform.clearslide.com/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://oauth.platform.clearslide.com/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8e7c0299-fd65-4e02-a3cb-e7d20e7ca007",
+    "name": "ClearSlide Platform Insights Meetings API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "ClearSlide Public APIs give customers and partners programmatic access to core ClearSlide features, including uploading content, listing presentations, creating trackable links, getting engagement insights, listing users, and hosting scheduled meetings. Transcribed from the public ClearSlide developer portal (ReadMe). ClearSlide is a Bigtincan sales engagement platform.\n\nContact Support:\n Name: ClearSlide API Support\n Email: apisupport@clearslide.com",
+      "type": "text/plain"
+    }
+  }
+}

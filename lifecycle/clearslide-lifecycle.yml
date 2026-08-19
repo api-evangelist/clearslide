@@ -1,18 +1,83 @@
-generated: '2026-07-18'
+generated: '2026-08-13'
 method: searched
-source: https://developer.clearslide.com/
+source: >-
+  https://developer.clearslide.com/, https://developer.clearslide.com/docs/whats-new,
+  https://developer.clearslide.com/changelog, live host probes
 versioning:
-  scheme: readme-version
+  scheme: docs-portal-version
   current: v2.0.0
+  prior_versions_still_selectable: [v1.0.0]
+  spec_info_version: 0.0.1
+  path_versioning: false
   docs: https://developer.clearslide.com/docs/whats-new
-changelog: https://developer.clearslide.com/changelog
+  note: >-
+    Three version signals disagree: the ReadMe portal is v2.0.0 (with v1.0.0 still selectable in
+    the version picker), the published Swagger document declares info.version 0.0.1, and the SCIM
+    surface is reached under a /v2/ path segment that the Platform API paths do not use. No
+    version is negotiated in a header or a path for the Platform API itself.
+changelog:
+  url: https://developer.clearslide.com/changelog
+  entries: 0
+  cross_ref: changelog/clearslide-changelog.yml
+  note: The surface exists and is empty — no post has ever been published to it.
 deprecation:
   policy_url: null
+  policy_published: false
   sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  deprecated_operations: []
+  note: >-
+    No deprecation policy, no notice period, no Sunset/Deprecation headers, and no operation in
+    either published contract is marked deprecated. v1.0.0 documentation remains selectable on the
+    portal with no statement about whether it is still supported.
 sla:
   url: null
-status_page: null
+  published: false
+support:
+  channels:
+  - type: forum
+    url: https://developer.clearslide.com/discuss
+    status: 200
+  - type: email
+    url: mailto:apisupport@clearslide.com
+  note: API account provisioning is manual — partners email apisupport@clearslide.com to be issued a client id and secret.
+status_page:
+  url: null
+  published: false
+  evidence:
+  - url: https://status.clearslide.com
+    finding: >-
+      Resolves to the Atlassian Statuspage product marketing page, not a ClearSlide status page.
+      No StatusPage pointer is emitted.
+platform_signals:
+  method: probed
+  observations:
+  - signal: brand-absorption
+    detail: >-
+      clearslide.com/pricing now serves "Pricing | Bigtincan" with Bigtincan Platform editions and
+      @bigtincan Twitter cards. clearslide.com/freetrial redirects to
+      experience.clearslide.com/demo-request. The ClearSlide brand survives on the developer portal
+      and security pages while the commercial surface has moved to the acquirer.
+  - signal: api-host-redirect
+    detail: >-
+      https://platform.clearslide.com/ now 302s to https://docs.platform.clearslide.com — the API
+      host root redirects to a legacy Swagger UI docs bundle. The API itself remains live: request
+      paths under that host return AWS API Gateway 401s rather than redirects.
+  - signal: documentation-age
+    detail: >-
+      The buttons documentation still lists Internet Explorer as a supported browser (retired 2022),
+      the sample application is written in Python 2 (end of life 2020), and the security page still
+      claims EU-U.S. Privacy Shield certification (invalidated 2020).
+  - signal: contract-staleness
+    detail: >-
+      The machine-readable contract is Swagger 2.0 at info.version 0.0.1, and the changes announced
+      on "What's New" are not reflected in it.
+  assessment: >-
+    The API is live and answering, but the surface around it is not being maintained: an empty
+    changelog, an unversioned stale contract, a broken api-catalog, and documentation that dates
+    itself. Recorded as observation, not as a deprecation claim — ClearSlide has published no
+    end-of-life notice for the Platform API.
 notes: >-
-  status.clearslide.com redirects to the Atlassian Statuspage product page rather than a live
-  ClearSlide status page, so no StatusPage pointer is emitted. No formal deprecation/Sunset
-  policy is published on the developer portal.
+  No Deprecation pointer and no StatusPage pointer are emitted in apis.yml: neither surface is
+  published by the provider. Both were checked directly this round.

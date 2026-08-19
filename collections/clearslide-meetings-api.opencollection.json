@@ -1,0 +1,100 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ClearSlide Platform Insights Meetings API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://oauth.platform.clearslide.com/oauth/authorize",
+      "accessTokenUrl": "https://oauth.platform.clearslide.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Meetings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List scheduled meetings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.clearslide.com/meeting/scheduled",
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://oauth.platform.clearslide.com/oauth/authorize",
+              "accessTokenUrl": "https://oauth.platform.clearslide.com/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "List all scheduled meetings."
+        },
+        {
+          "info": {
+            "name": "Reserve a scheduled meeting",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://platform.clearslide.com/meeting/scheduled",
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://oauth.platform.clearslide.com/oauth/authorize",
+              "accessTokenUrl": "https://oauth.platform.clearslide.com/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Reserves a temporary Scheduled Meeting."
+        },
+        {
+          "info": {
+            "name": "Update a scheduled meeting",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://platform.clearslide.com/meeting/scheduled/:inviteMailVid",
+            "params": [
+              {
+                "name": "inviteMailVid",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://oauth.platform.clearslide.com/oauth/authorize",
+              "accessTokenUrl": "https://oauth.platform.clearslide.com/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Updates an existing scheduled meeting; to make a meeting active or cancelled set status to ACTIVE or CANCELLED."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

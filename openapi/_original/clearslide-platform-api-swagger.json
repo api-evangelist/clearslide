@@ -1,0 +1,1681 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "ClearSlide API",
+    "description": "The ClearSlide API is a set of REST endpoints and embeddable action buttons that enable you to rapidly integrate your applications with ClearSlide. Our API grants access to core ClearSlide features, including listing ClearSlide presentations, creating trackable links, gathering engagement data, and more. Check out our full API documentation to learn about everything you can do with the API. \n\nThe ClearSlide API uses OAuth2.0 for authorization, please refer to our [OAuth 2.0 Documentation](oauth2.html) for detailed instructions on obtaining the tokens required to make the requests below.",
+    "contact": {
+      "email": "apisupport@clearslide.com"
+    }
+  },
+  "host": "platform.clearslide.com",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "produces": [
+    "application/vnd.api+json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "paths": {
+    "/presentations": {
+      "get": {
+        "tags": [
+          "presentations"
+        ],
+        "description": "Returns a list of `presentation` objects that match query criteria. Returned list of objects by default is sorted descending by `dateModified` and paginated with default page size 100.\n",
+        "parameters": [
+          {
+            "name": "authorizationToken",
+            "in": "header",
+            "description": "OAuth2.0 Token",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "targetUserId",
+            "in": "header",
+            "description": "Return all presentations that are accessible by user specified in this parameter.",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "page[size]",
+            "in": "query",
+            "description": "The size of a page to be used for pagination",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page[number]",
+            "in": "query",
+            "description": "The page number",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort[presentations][dateCreated]",
+            "in": "query",
+            "description": "Sorts presentations by `dateCreated` field",
+            "required": false,
+            "type": "string",
+            "format": "string",
+            "enum": [
+              "asc",
+              "desc"
+            ]
+          },
+          {
+            "name": "sort[presentations][dateModified]",
+            "in": "query",
+            "description": "Sorts presentations by `dateModified` field",
+            "required": false,
+            "type": "string",
+            "format": "string",
+            "enum": [
+              "asc",
+              "desc"
+            ]
+          },
+          {
+            "name": "sort[presentations][name]",
+            "in": "query",
+            "description": "Sorts presentations by `name` field",
+            "required": false,
+            "type": "string",
+            "format": "string",
+            "enum": [
+              "asc",
+              "desc"
+            ]
+          },
+          {
+            "name": "filter[presentations][name]",
+            "in": "query",
+            "description": "Filters all presentations that equals or contains specified parameter. Case-insensitive",
+            "required": false,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "filter[presentations][ownerId]",
+            "in": "query",
+            "description": "Filters all presentations that are owned by the specified ownerId. Case-sensitive",
+            "required": false,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "filter[presentations][dateCreated]",
+            "in": "query",
+            "description": "Filters all presentations that were created within the specified comma separated date range per ISO-8601 format (e.g., `2017-02-28T14:12:29+02:00,2017-03-28T14:12:29+02:00`).",
+            "required": false,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "filter[presentations][dateModified]",
+            "in": "query",
+            "description": "Filters all presentations that were modified within the specified comma separated date range per ISO-8601 format (e.g., `2017-02-28T14:12:29+02:00,2017-03-28T14:12:29+02:00`).",
+            "required": false,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "filter[presentations][bookmarked]",
+            "in": "query",
+            "description": "Depending on boolean value restricts only bookmarked presentations",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "filter[presentations][groups]",
+            "in": "query",
+            "description": "Filters all presentations so that each presentation's `group` equals to one of the specified query parameter that separated by `,`, like `group1,group2`",
+            "required": false,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "filter[presentations][tags]",
+            "in": "query",
+            "description": "Filters all presentations so that one of the presentation's tag equals to one of the specified query parameter that separated by `,`, like `tag1,tag2`",
+            "required": false,
+            "type": "string",
+            "format": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/presentation"
+              }
+            }
+          },
+          "404": {
+            "description": "failure",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      }
+    },
+    "/links": {
+      "post": {
+        "tags": [
+          "links"
+        ],
+        "description": "Creates a trackable link for a presentation.\n",
+        "parameters": [
+          {
+            "name": "authorizationToken",
+            "in": "header",
+            "description": "OAuth2.0 Token",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Link object that needs to be created",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/links"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CreatedLink"
+              }
+            }
+          },
+          "404": {
+            "description": "failure",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "422": {
+            "description": "constraint violation",
+            "schema": {
+              "$ref": "#/definitions/ConstraintViolation"
+            }
+          }
+        }
+      }
+    },
+    "/insights": {
+      "get": {
+        "tags": [
+          "insights"
+        ],
+        "description": "Get statistics for particular sent pitch\n",
+        "parameters": [
+          {
+            "name": "authorizationToken",
+            "in": "header",
+            "description": "OAuth2.0 Token",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "targetUserId",
+            "in": "header",
+            "description": "Target user ID for which statistics should be received",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "filter[insights][activityDate]",
+            "in": "query",
+            "description": "Filters activities for the previous 24 hours starting from day passed. Date Format is ISO-8601 e.g '2017-02-28T14:12:29-08:00'",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Insights"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "description": "Returns a list of `user` objects that match query criteria. Returned list of objects",
+        "parameters": [
+          {
+            "name": "authorizationToken",
+            "in": "header",
+            "description": "OAuth2.0 Token",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "page[size]",
+            "in": "query",
+            "description": "The size of a page to be used for pagination",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "page[number]",
+            "in": "query",
+            "description": "The page number",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "filter[users][emails]",
+            "in": "query",
+            "description": "perform query users whose email is in emails as a list",
+            "required": false,
+            "type": "string",
+            "format": "List<email>"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/user"
+              }
+            }
+          },
+          "404": {
+            "description": "failure",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      }
+    },
+    "/upload": {
+      "post": {
+        "tags": [
+          "upload"
+        ],
+        "description": "Get credentials to upload your file to ClearSlide.\n",
+        "parameters": [
+          {
+            "name": "authorizationToken",
+            "in": "header",
+            "description": "OAuth2.0 Token",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "targetUserId",
+            "in": "header",
+            "description": "User id of file uploader",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Name and size of the file to be uploaded",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/upload"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/uploadCredentials"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/uploadErrorResponse"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/uploadErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/uploadErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/upload/{uploadID}": {
+      "get": {
+        "tags": [
+          "upload"
+        ],
+        "description": "Check the status of uploaded file",
+        "parameters": [
+          {
+            "name": "authorizationToken",
+            "in": "header",
+            "description": "OAuth2.0 Token",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          },
+          {
+            "name": "uploadID",
+            "in": "path",
+            "description": "Upload ID of file",
+            "required": true,
+            "type": "string",
+            "format": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/uploadStatus"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/uploadErrorResponse"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/uploadErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/uploadErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "presentation": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "userId",
+        "dateCreated",
+        "dateModified",
+        "bookmarked",
+        "archived",
+        "tags",
+        "livePitchCount",
+        "emailPitchCount",
+        "group"
+      ],
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The ID of the user who owns the presentation"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the presentation"
+        },
+        "id": {
+          "type": "string",
+          "description": "The presentation ID"
+        },
+        "dateCreated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The last time the presentation was modified"
+        },
+        "dateModified": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The time when the presentation was created"
+        },
+        "livePitchCount": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The number of live pitches that have used this presentation"
+        },
+        "emailPitchCount": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The number of email pitches that have used this presentation"
+        },
+        "bookmarked": {
+          "type": "boolean",
+          "format": "string",
+          "description": "Whether this presentation is bookmarked"
+        },
+        "archived": {
+          "type": "boolean",
+          "format": "string",
+          "description": "Whether this presentation is archived"
+        },
+        "group": {
+          "type": "string",
+          "format": "string",
+          "description": "The group this presentation belongs to"
+        },
+        "thumbnailUrls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of image thumbnails for all the slides of the presentation"
+        },
+        "previewUrls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of image previews for all the slides of the presentation"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The tags that have been applied to this presentation"
+        }
+      }
+    },
+    "upload": {
+      "type": "object",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/uploadFileData"
+        }
+      }
+    },
+    "uploadFileData": {
+      "type": "object",
+      "required": [
+        "type",
+        "attributes"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Type of object to create. Should be `upload`",
+          "default": "upload",
+          "enum": [
+            "upload"
+          ]
+        },
+        "attributes": {
+          "type": "object",
+          "required": [
+            "fileName",
+            "fileSize"
+          ],
+          "properties": {
+            "fileName": {
+              "type": "string",
+              "description": "Specify name of the file to be uploaded."
+            },
+            "fileSize": {
+              "type": "string",
+              "description": "Specify size (in bytes) of the file to be uploaded."
+            }
+          }
+        }
+      }
+    },
+    "uploadCredentials": {
+      "type": "object",
+      "required": [
+        "data",
+        "included"
+      ],
+      "properties": {
+        "data": {
+          "type": "object",
+          "$ref": "#/definitions/uploadCredentialsData"
+        },
+        "included": {
+          "type": "array"
+        }
+      }
+    },
+    "uploadCredentialsData": {
+      "type": "object",
+      "required": [
+        "attributes",
+        "id",
+        "links",
+        "relationships",
+        "type"
+      ],
+      "properties": {
+        "attributes": {
+          "type": "object",
+          "$ref": "#/definitions/uploadCredentialsDataAttributes"
+        },
+        "id": {
+          "type": "string",
+          "description": "Upload ID of file"
+        },
+        "links": {
+          "type": "object",
+          "$ref": "#/definitions/uploadCredentialsLinks"
+        },
+        "relationships": {
+          "type": "object"
+        },
+        "type": {
+          "type": "string",
+          "default": "upload"
+        }
+      }
+    },
+    "uploadCredentialsDataAttributes": {
+      "type": "object",
+      "required": [
+        "fileName",
+        "fileSize",
+        "postFileParamContentType",
+        "postFileParamName",
+        "postParams",
+        "postURL",
+        "statusParams",
+        "statusPath"
+      ],
+      "properties": {
+        "fileName": {
+          "type": "string"
+        },
+        "fileSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "postFileParamContentType": {
+          "type": "string"
+        },
+        "postFileParamName": {
+          "type": "string"
+        },
+        "postParams": {
+          "type": "object",
+          "$ref": "#/definitions/uploadCredentialsPostParams"
+        },
+        "postURL": {
+          "type": "string"
+        },
+        "statusParams": {
+          "type": "object",
+          "$ref": "#/definitions/uploadCredentialsStatusParams"
+        },
+        "statusPath": {
+          "type": "string"
+        }
+      }
+    },
+    "uploadCredentialsLinks": {
+      "type": "object",
+      "required": [
+        "self"
+      ],
+      "properties": {
+        "self": {
+          "type": "string"
+        }
+      }
+    },
+    "uploadCredentialsPostParams": {
+      "type": "object",
+      "required": [
+        "AWSAccessKeyId",
+        "acl",
+        "key",
+        "policy",
+        "signature",
+        "x-amz-meta-filename",
+        "x-amz-meta-manageHost",
+        "x-amz-meta-userVID",
+        "x-amz-server-side-encryption"
+      ],
+      "properties": {
+        "AWSAccessKeyId": {
+          "type": "string"
+        },
+        "acl": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        },
+        "policy": {
+          "type": "string"
+        },
+        "signature": {
+          "type": "string"
+        },
+        "x-amz-meta-filename": {
+          "type": "string"
+        },
+        "x-amz-meta-manageHost": {
+          "type": "string"
+        },
+        "x-amz-meta-userVID": {
+          "type": "string"
+        },
+        "x-amz-server-side-encryption": {
+          "type": "string"
+        }
+      }
+    },
+    "uploadCredentialsStatusParams": {
+      "type": "object",
+      "required": [
+        "uploadID"
+      ],
+      "properties": {
+        "uploadID": {
+          "type": "string"
+        }
+      }
+    },
+    "uploadErrorResponse": {
+      "type": "object",
+      "required": [
+        "errors"
+      ],
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/uploadError"
+          }
+        }
+      }
+    },
+    "uploadStatus": {
+      "type": "object",
+      "required": [
+        "data",
+        "included"
+      ],
+      "properties": {
+        "data": {
+          "type": "object",
+          "$ref": "#/definitions/uploadStatusData"
+        },
+        "included": {
+          "type": "array"
+        }
+      }
+    },
+    "uploadStatusData": {
+      "type": "object",
+      "required": [
+        "attributes",
+        "id",
+        "links",
+        "relationships",
+        "type"
+      ],
+      "properties": {
+        "attributes": {
+          "type": "object",
+          "$ref": "#/definitions/uploadStatusDataAttributes"
+        },
+        "id": {
+          "type": "string",
+          "description": "Upload ID of file"
+        },
+        "links": {
+          "type": "object",
+          "$ref": "#/definitions/uploadStatusLinks"
+        },
+        "relationships": {
+          "type": "object"
+        },
+        "type": {
+          "type": "string",
+          "default": "upload"
+        }
+      }
+    },
+    "uploadStatusDataAttributes": {
+      "type": "object",
+      "required": [
+        "deckName",
+        "deckVID",
+        "hasRichContent",
+        "isComplete",
+        "isError",
+        "status",
+        "uploadType"
+      ],
+      "properties": {
+        "deckName": {
+          "type": "string"
+        },
+        "deckVID": {
+          "type": "string"
+        },
+        "hasRichContent": {
+          "type": "boolean"
+        },
+        "isComplete": {
+          "type": "boolean"
+        },
+        "isError": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "string"
+        },
+        "uploadType": {
+          "type": "string"
+        }
+      }
+    },
+    "uploadStatusLinks": {
+      "type": "object",
+      "required": [
+        "self"
+      ],
+      "properties": {
+        "self": {
+          "type": "string"
+        }
+      }
+    },
+    "uploadError": {
+      "type": "object",
+      "required": [
+        "detail",
+        "status",
+        "title"
+      ],
+      "properties": {
+        "detail": {
+          "type": "string",
+          "description": "Error detail"
+        },
+        "status": {
+          "type": "string",
+          "description": "Error status"
+        },
+        "title": {
+          "type": "string",
+          "description": "Error title"
+        }
+      }
+    },
+    "links": {
+      "type": "object",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/data"
+        }
+      }
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "type",
+        "attributes"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Type of trackable object to create. Should be `links`",
+          "default": "links",
+          "enum": [
+            "links"
+          ]
+        },
+        "attributes": {
+          "type": "object",
+          "required": [
+            "sendViewAlerts",
+            "presentationIds",
+            "userId",
+            "internalPitch",
+            "company",
+            "recipientName",
+            "downloadOption",
+            "expiration",
+            "allowViewerFeedback"
+          ],
+          "properties": {
+            "sendViewAlerts": {
+              "type": "boolean",
+              "description": "When `true`, end-user receives an email view alert when the link is clicked. Default is `true`.",
+              "default": true
+            },
+            "presentationIds": {
+              "type": "array",
+              "description": "Specify list of target presentation(s) for which the link is requested. Maximum of 4 presentations are supported.",
+              "items": {
+                "type": "string"
+              }
+            },
+            "userId": {
+              "type": "string",
+              "description": "Specify the target user who will own the link, receive the view alert, etc."
+            },
+            "internalPitch": {
+              "type": "boolean",
+              "description": "Specify that the link is intended for internal use only (non-customer facing). When `true`, the link and associated activity will be marked as internal in the ClearSlide app. Default is `false`.",
+              "default": false
+            },
+            "company": {
+              "$ref": "#/definitions/Company"
+            },
+            "recipientName": {
+              "type": "string",
+              "description": "Recipient Name. Allowed and required."
+            },
+            "notes": {
+              "type": "string",
+              "description": "Add notes associated with the link. This editable note will appear in the ClearSlide app Link Details page."
+            },
+            "downloadOption": {
+              "$ref": "#/definitions/DownloadOption"
+            },
+            "expiration": {
+              "$ref": "#/definitions/Expiration"
+            },
+            "allowViewerFeedback": {
+              "type": "boolean",
+              "description": "Enable viewer of the link to provide feedback on slides. Default is `false`.",
+              "default": false
+            }
+          }
+        }
+      }
+    },
+    "Company": {
+      "type": "object",
+      "required": [
+        "companyName",
+        "companyCrmId",
+        "companyCrmType"
+      ],
+      "properties": {
+        "companyName": {
+          "type": "string",
+          "description": "Specify name of the target company that is going to receive the link. companyName will be ignored when internalPitch is `true`."
+        },
+        "companyCrmId": {
+          "type": "string",
+          "description": "Specify the id of the target CRM object that is going to receive the link. This will help tie various ClearSlide activities to the desired CRM object."
+        },
+        "companyCrmType": {
+          "type": "string",
+          "default": "Case",
+          "enum": [
+            "Case",
+            "Campaign",
+            "Account",
+            "Opportunity",
+            "Lead"
+          ],
+          "description": "Specify the CRM object type. For example, \u2018Case\u2019, \u2018Campaign\u2019, \u2018Account\u2019, \u2018Opportunity\u2019, \u2018Lead\u2019. Default is `Case`."
+        }
+      }
+    },
+    "DownloadOption": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "linkLocation",
+        "downloadOriginalFormat"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "When `true`, download option will be enabled. Default is `false`.",
+          "default": false
+        },
+        "linkLocation": {
+          "type": "string",
+          "description": "Specify location of the Download option for the link viewer. Option includes `None`, `Bottom`, `Top`, `End` and `Bottom & End`. Default is `None`.",
+          "default": "None",
+          "enum": [
+            "None",
+            "Bottom",
+            "Top",
+            "End",
+            "Bottom & End"
+          ]
+        },
+        "downloadOriginalFormat": {
+          "type": "boolean",
+          "description": "Enable viewer of the link to download the source presentation (in original format). Requires linkLocation to be set to other than `None`. Default is `false`.",
+          "default": false
+        }
+      }
+    },
+    "Expiration": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "expirationPeriod"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "When `true`, expiration of link is enabled. Default is `false`.",
+          "default": false
+        },
+        "expirationPeriod": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Specify the expiration period of link when enabled is `true`. Possible values are `1`, `3`, `7`, `14`, `30`, `60`, `90`, and `180`."
+        }
+      }
+    },
+    "CreatedLink": {
+      "type": "object",
+      "required": [
+        "type",
+        "id",
+        "attributes"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Type of created object"
+        },
+        "id": {
+          "type": "string",
+          "description": "Link ID"
+        },
+        "attributes": {
+          "$ref": "#/definitions/CreatedAttributes"
+        }
+      }
+    },
+    "CreatedAttributes": {
+      "type": "object",
+      "required": [
+        "viewerLink",
+        "previewLink"
+      ],
+      "properties": {
+        "viewerLink": {
+          "type": "string",
+          "description": "Viewer link URL"
+        },
+        "previewLink": {
+          "type": "string",
+          "description": "Preview link URL"
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "tbd"
+        },
+        "message": {
+          "type": "string",
+          "description": "tbd"
+        }
+      }
+    },
+    "ConstraintViolation": {
+      "type": "object",
+      "required": [
+        "status",
+        "title",
+        "source"
+      ],
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "description": "constraint violation response status"
+        },
+        "title": {
+          "type": "string",
+          "description": "constraint violation response title"
+        },
+        "source": {
+          "$ref": "#/definitions/ConstraintViolationSource"
+        }
+      }
+    },
+    "ConstraintViolationSource": {
+      "type": "object",
+      "required": [
+        "pointer"
+      ],
+      "properties": {
+        "pointer": {
+          "type": "string",
+          "description": "constraint violation source"
+        }
+      }
+    },
+    "Insights": {
+      "type": "object",
+      "required": [
+        "type",
+        "id",
+        "attributes"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Type of insights statistic"
+        },
+        "id": {
+          "type": "string",
+          "description": "ID of insights statistic"
+        },
+        "attributes": {
+          "$ref": "#/definitions/InsightsAttribute"
+        }
+      }
+    },
+    "InsightsAttribute": {
+      "title": "InsightsAttribute",
+      "type": "object",
+      "required": [
+        "numClicks",
+        "prospectName",
+        "internal",
+        "totalViewTimeSec",
+        "companyName",
+        "numLeads",
+        "source",
+        "hasLeadForm",
+        "type",
+        "vid",
+        "numEmailOpened",
+        "embeddedPitchVids",
+        "decks",
+        "style",
+        "numViewers",
+        "slideCount",
+        "analyticsId",
+        "createDate"
+      ],
+      "properties": {
+        "numClicks": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of times this pitch was opened"
+        },
+        "lastViewed": {
+          "type": "string",
+          "description": "Date and time when this link was last opened in format `yyyy-MM-dd HH:mm:ss`"
+        },
+        "prospectName": {
+          "type": "string",
+          "description": "Recipient Name"
+        },
+        "internal": {
+          "type": "boolean",
+          "description": "If pitch was internal or not"
+        },
+        "totalViewTimeSec": {
+          "type": "integer",
+          "format": "int32",
+          "description": "TDB"
+        },
+        "companyName": {
+          "type": "string",
+          "description": "Company name"
+        },
+        "companyCrmID": {
+          "type": "string",
+          "description": "Company CRM id enables you to associate a CRM account or opportunity ID to ClearSlide pitch"
+        },
+        "personCrmID": {
+          "type": "string",
+          "description": "Person CRM id enables you to associate a CRM lead or contact ID to ClearSlide pitch"
+        },
+        "thirdPartyClientID": {
+          "type": "string",
+          "description": "Third party client id identifies the third party partner who requested ClearSlide access"
+        },
+        "thirdPartyExternalID": {
+          "type": "string",
+          "description": "Third party external id enables partners to associate a unique id to the ClearSlide activity"
+        },
+        "numLeads": {
+          "type": "integer",
+          "format": "int32",
+          "description": "TDB"
+        },
+        "activityDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date on which activity was reported."
+        },
+        "source": {
+          "type": "string",
+          "description": "TDB"
+        },
+        "hasLeadForm": {
+          "type": "boolean",
+          "description": "If link has lead form or not"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "EMAIL",
+            "MEETING",
+            "LINK",
+            "SCHEDULED_MEETING"
+          ],
+          "description": "Type of insights statistic"
+        },
+        "vid": {
+          "type": "string",
+          "description": "External ID of this object"
+        },
+        "numEmailOpened": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of users who opened email. In case of EMAIL."
+        },
+        "lastViewer": {
+          "$ref": "#/definitions/InsightsLastViewer"
+        },
+        "embeddedPitchVids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "External IDs of the pitches embedded into this pitch"
+        },
+        "decks": {
+          "$ref": "#/definitions/InsightsDeck"
+        },
+        "style": {
+          "type": "string",
+          "description": "TDB"
+        },
+        "numViewers": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of viewers who opened this pitch in case of LINK. Number of recipients to whom this pitch was sent in case of EMAIL."
+        },
+        "slideCount": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of slides this pitch has"
+        },
+        "analyticsId": {
+          "type": "string",
+          "description": "TDB"
+        },
+        "createDate": {
+          "type": "string",
+          "description": "Date when pitch was created"
+        },
+        "subject": {
+          "type": "string",
+          "description": "Email subject"
+        },
+        "emailRecipients": {
+          "$ref": "#/definitions/InsightsEmailRecipients"
+        },
+        "uploadMethod": {
+          "type": "string",
+          "description": "TDB"
+        },
+        "minutes": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of minutes (duration) this MEETING is scheduled for. In case of SCHEDULED_MEETING"
+        },
+        "avgEngagementActivity": {
+          "type": "integer",
+          "format": "int32",
+          "description": "TBD"
+        },
+        "hostedBy": {
+          "type": "string",
+          "description": "Name of the owner of the meeting"
+        },
+        "attendees": {
+          "$ref": "#/definitions/InsightsAttendees"
+        },
+        "engagmentDataPoints": {
+          "$ref": "#/definitions/InsightsEngagmentDataPoints"
+        },
+        "presenterVID": {
+          "type": "string",
+          "description": "TBD"
+        },
+        "recordingCount": {
+          "type": "integer",
+          "description": "Number of recordings in a MEETING activity"
+        },
+        "hasRecording": {
+          "type": "boolean",
+          "description": "If pitch has recording or not. In case of MEETING"
+        },
+        "recordings": {
+          "$ref": "#/definitions/Recordings"
+        },
+        "meetingType": {
+          "type": "string",
+          "description": "TDB"
+        },
+        "seconds": {
+          "type": "string",
+          "description": "Duration of a MEETING in seconds"
+        },
+        "totalViewers": {
+          "type": "string",
+          "description": "Total number of viewers this MEETING had"
+        },
+        "startDate": {
+          "type": "string",
+          "description": "Date and time formatted as `yyyy-MM-dd HH:mm:ss` the meeting was started"
+        }
+      }
+    },
+    "InsightsDeck": {
+      "type": "object",
+      "required": [
+        "deckID",
+        "vid",
+        "name",
+        "numSlides"
+      ],
+      "properties": {
+        "deckID": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Internal presentation ID"
+        },
+        "vid": {
+          "type": "string",
+          "description": "External presentation ID"
+        },
+        "name": {
+          "type": "string",
+          "description": "Presentation name"
+        },
+        "numSlides": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of slides presentation has"
+        }
+      }
+    },
+    "InsightsAttendees": {
+      "type": "object",
+      "required": [
+        "name",
+        "inPerson",
+        "manualEntry"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of a viewer"
+        },
+        "inPerson": {
+          "type": "boolean",
+          "description": "TDB"
+        },
+        "manualEntry": {
+          "type": "boolean",
+          "description": "TDB"
+        }
+      }
+    },
+    "Recordings": {
+      "type": "array",
+      "items": {
+        "minItems": 0,
+        "type": "object",
+        "required": [
+          "id",
+          "videos"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "videos": {
+            "$ref": "#/definitions/Vidoes"
+          }
+        }
+      }
+    },
+    "Vidoes": {
+      "type": "array",
+      "items": {
+        "minItems": 1,
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Video Link which will expire after time specified in `urlExpiresAt`"
+          },
+          "urlExpiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "height": {
+            "type": "integer"
+          },
+          "width": {
+            "type": "integer"
+          },
+          "format": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "InsightsEngagmentDataPoints": {
+      "type": "object",
+      "required": [
+        "timestamp",
+        "value"
+      ],
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "description": "Date and time formatted as `yyyy-MM-dd HH:mm:ss`"
+        },
+        "value": {
+          "type": "integer",
+          "format": "int32",
+          "description": "TDB"
+        }
+      }
+    },
+    "InsightsLastViewer": {
+      "type": "object",
+      "required": [
+        "name",
+        "location",
+        "viewing",
+        "durationSeconds",
+        "numSlides"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the viewer"
+        },
+        "location": {
+          "type": "string",
+          "description": "Location of the viewer"
+        },
+        "viewing": {
+          "type": "boolean",
+          "description": "If viewer is currently viewing"
+        },
+        "durationSeconds": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Time spent for viewing"
+        },
+        "numSlides": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of slides viewer has viewed"
+        }
+      }
+    },
+    "InsightsEmailRecipients": {
+      "type": "object",
+      "required": [
+        "email",
+        "formattedName",
+        "emailStatus",
+        "displayName",
+        "latestActivityTimestamp"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "Email of a user"
+        },
+        "formattedName": {
+          "type": "string",
+          "description": "Formatted name"
+        },
+        "emailStatus": {
+          "type": "string",
+          "description": "Status of email, whether user opened email, opened pitch or not"
+        },
+        "displayName": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Name of a user"
+        },
+        "latestActivityTimestamp": {
+          "type": "integer",
+          "description": "Timestamp of latest activity of a user"
+        }
+      }
+    },
+    "user": {
+      "type": "object",
+      "required": [
+        "attributes",
+        "id",
+        "links",
+        "relationships",
+        "type"
+      ],
+      "properties": {
+        "attributes": {
+          "$ref": "#/definitions/UsersAttributes"
+        },
+        "id": {
+          "type": "string",
+          "description": "ID of User"
+        },
+        "links": {
+          "$ref": "#/definitions/UsersLinks"
+        },
+        "relationships": {
+          "type": "object"
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of User"
+        }
+      }
+    },
+    "UsersAttributes": {
+      "type": "object",
+      "required": [
+        "accountType",
+        "created",
+        "email",
+        "first_name",
+        "last_name",
+        "teamId",
+        "userStatus",
+        "user_group"
+      ],
+      "properties": {
+        "accountType": {
+          "type": "string",
+          "description": "The type of the user account, it can be ADMIN, GROUP_LEAD or USER"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time",
+          "description": "create date of this user"
+        },
+        "email": {
+          "type": "string",
+          "description": "The email of the user"
+        },
+        "first_name": {
+          "type": "string",
+          "description": "The first name of the user"
+        },
+        "last_name": {
+          "type": "string",
+          "description": "The last name of the user"
+        },
+        "teamId": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The id of team which the user belongs to"
+        },
+        "userStatus": {
+          "type": "string",
+          "description": "The status of the user account, it can be DISABLED, ENABLED or UNACTIVATED"
+        },
+        "user_group": {
+          "$ref": "#/definitions/UsersGroups",
+          "type": "object",
+          "description": "Contains primary group as a group object and secondary groups as a list of group objects"
+        }
+      }
+    },
+    "UsersGroups": {
+      "type": "object",
+      "required": [
+        "primary",
+        "secondary"
+      ],
+      "properties": {
+        "primary": {
+          "$ref": "#/definitions/UsersPrimaryGroup"
+        },
+        "secondary": {
+          "$ref": "#/definitions/UsersSecondaryGroups"
+        }
+      }
+    },
+    "UsersPrimaryGroup": {
+      "type": "object",
+      "required": [
+        "groupName",
+        "id"
+      ],
+      "properties": {
+        "groupName": {
+          "type": "string",
+          "description": "user's primary group name"
+        },
+        "id": {
+          "type": "string",
+          "description": "user's primary group ID"
+        }
+      }
+    },
+    "UsersSecondaryGroups": {
+      "type": "array",
+      "items": {
+        "minItems": 0,
+        "type": "object",
+        "required": [
+          "groupName",
+          "id"
+        ],
+        "properties": {
+          "groupName": {
+            "type": "string",
+            "description": "user's secondary group name"
+          },
+          "id": {
+            "type": "string",
+            "description": "user's secondary group ID"
+          }
+        }
+      }
+    },
+    "UsersLinks": {
+      "type": "object",
+      "required": [
+        "self"
+      ],
+      "properties": {
+        "self": {
+          "type": "string",
+          "description": "Link to user's account"
+        }
+      }
+    },
+    "error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "tbd"
+        },
+        "message": {
+          "type": "string",
+          "description": "tbd"
+        }
+      }
+    }
+  }
+}

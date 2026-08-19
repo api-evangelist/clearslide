@@ -1,0 +1,93 @@
+generated: '2026-08-13'
+method: searched
+source: https://www.clearslide.com/pricing/
+plan_count: 2
+currency: null
+billing_period: null
+public_pricing: false
+summary: >-
+  ClearSlide publishes named product editions but no prices. The pricing page at
+  clearslide.com/pricing now serves BIGTINCAN Platform pricing — ClearSlide is fully folded into
+  its acquirer's brand and the page title, Twitter card (@bigtincan) and every edition name are
+  Bigtincan's. Every tier terminates in "Get Pricing" / "Contact us"; no number, currency, quota
+  or overage is published anywhere.
+plans:
+- name: Essential
+  price: null
+  currency: null
+  period: null
+  cta: Get Pricing
+  quota: null
+  overage: null
+  includes:
+  - Learning & Coaching
+  - CoachingAI
+  - Content Management
+  - SearchAI
+  - Digital Sales Rooms & Shares
+  - MeetingsAI
+  - Analytics
+  - Scorecards
+  - RolePlayAI
+  - Genie Assistant
+  note: >-
+    Bigtincan Platform edition. Description covers training, coaching, content, digital sales
+    rooms and analytics/scorecards.
+- name: Elite
+  price: null
+  currency: null
+  period: null
+  cta: Get Pricing
+  quota: null
+  overage: null
+  includes:
+  - Learning & Coaching
+  - CoachingAI
+  - Content Management
+  - SearchAI
+  - Digital Sales Rooms & Shares
+  - MeetingsAI
+  - Analytics
+  - Scorecards
+  - RolePlayAI
+  - Genie Assistant
+  note: >-
+    Bigtincan Platform edition. The published feature list is identical to Essential on the
+    pricing page; the editions are differentiated only in prose (automated content shares,
+    dynamic practice, AI insights), not in the itemised list.
+solution_bundles:
+- name: Readiness
+  price: null
+  note: Entry point for interactive training and roleplay practice.
+- name: Content
+  price: null
+  note: Entry point for content management and AI assistance.
+- name: Engagement
+  price: null
+  note: Entry point for buyer experiences, video meetings and digital sales rooms.
+support_packages:
+- name: Bronze Support
+  price: null
+- name: Silver Support
+  price: null
+- name: Gold Support
+  price: null
+- name: Platinum Support
+  price: null
+api_access:
+  included_in_plan: null
+  note: >-
+    No edition mentions API access, and no API-specific pricing, quota or metering is published.
+    API onboarding is a manual approval path — the developer portal instructs partners to sign up
+    for a free ClearSlide account and then email apisupport@clearslide.com to have an API account
+    created and a client id/secret issued.
+evidence:
+- url: https://www.clearslide.com/pricing/
+  status: 200
+  note: Serves "Pricing | Bigtincan"; editions Essential and Elite, both "Get Pricing".
+- url: https://www.clearslide.com/freetrial
+  status: 200
+  note: Redirects to https://experience.clearslide.com/demo-request — a demo-request form, not a self-serve trial.
+notes: >-
+  Recorded as sales-gated rather than absent: the tiers are named and their feature sets are
+  published, but no monetary value is. plan_count counts the two named platform editions.

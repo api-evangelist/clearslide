@@ -1,34 +1,202 @@
-generated: '2026-07-18'
+generated: '2026-08-13'
 method: searched
-source: https://developer.clearslide.com/
+source: >-
+  openapi/_original/clearslide-platform-api-swagger.json (harvested 2026-08-13 from
+  docs.platform.clearslide.com), https://developer.clearslide.com/docs/oauth-20,
+  https://docs.platform.clearslide.com/oauth2.html, and live probes of platform.clearslide.com
+summary: >-
+  ClearSlide's Platform API is a JSON:API-flavoured REST surface fronted by AWS API Gateway. This
+  round replaces the previous placeholder conventions with the real parameter names, media types
+  and header names read from the provider's own published Swagger 2.0 document, which was found
+  on the legacy Swagger UI host after platform.clearslide.com began redirecting there.
+media_types:
+  produces: application/vnd.api+json
+  consumes: application/json
+  note: >-
+    The response media type is the JSON:API type (RFC-registered as application/vnd.api+json), but
+    requests are plain application/json — an asymmetry the spec declares globally.
 authentication:
-  style: oauth2-bearer
-  flows: [authorizationCode, password]
-  token_header: "Authorization: Bearer <access_token>"
+  style: custom-header-token
+  token_header: authorizationToken
+  header_value: the OAuth 2.0 access token, raw
+  correction: >-
+    IMPORTANT — this is NOT `Authorization: Bearer <token>`. Every Platform API operation in the
+    published spec declares a REQUIRED header parameter literally named `authorizationToken`. The
+    previous round of this artifact recorded "oauth2-bearer / Authorization: Bearer" and was wrong.
+  grant_flows:
+  - authorization_code
+  - refresh_token
+  authorize_url: https://oauth.platform.clearslide.com/oauth/authorize
+  token_url: https://oauth.platform.clearslide.com/oauth/token
+  client_auth: HTTP Basic (RFC 2617 §2) with client id + client secret at the token endpoint
   scopes: [read, write]
+  token_format: opaque UUID
+  token_lifetime_seconds: 3600
+  registration: mailto:apisupport@clearslide.com
   docs: https://developer.clearslide.com/docs/oauth-20
   cross_ref: authentication/clearslide-authentication.yml
+  note: >-
+    SCIM is the exception: the SCIM endpoints document a standard `authorization` header (shown
+    both bare and as `Bearer`), not `authorizationToken`. Two auth header conventions coexist on
+    one host.
+impersonation:
+  header: targetUserId
+  required: true
+  applies_to:
+  - GET /presentations
+  - GET /insights
+  - POST /upload
+  description: >-
+    A required header naming the user whose resources the call operates on — presentations
+    accessible by that user, statistics for that user, or the uploading user. Calls are made on
+    behalf of a specified user rather than the token holder.
 idempotency:
   supported: false
-  notes: No idempotency-key contract is documented on the ClearSlide developer portal.
+  header: null
+  evidence: >-
+    No idempotency key, request-id-based dedupe or replay contract appears in the published
+    Swagger document or anywhere in the developer portal, including on POST /links and POST
+    /upload, both of which create resources.
+  impact: >-
+    A retried POST /links after a timeout will create a second trackable link. There is no
+    provider-supplied way to make creation safe to retry.
+  note: >-
+    No `Idempotency` pointer is emitted in apis.yml — the check asserts the provider supports
+    idempotent writes, and ClearSlide does not.
 pagination:
-  style: page-based
+  style: json-api-page
   documented: true
-  notes: >-
-    List endpoints (e.g. /presentations, /users) return objects paginated with a default page
-    size of 100; /presentations is sorted descending by dateModified by default.
-    Exact query parameter names are not transcribed here to avoid fabrication.
-  cross_ref: openapi/clearslide-openapi.yml
+  params:
+  - name: page[size]
+    in: query
+    type: integer
+    description: The size of a page to be used for pagination.
+  - name: page[number]
+    in: query
+    type: integer
+    description: The page number.
+  default_page_size: 100
+  applies_to:
+  - GET /presentations
+  - GET /users
+  response_fields: []
+  note: >-
+    Page-number pagination in JSON:API bracket syntax. The spec declares no pagination metadata or
+    `links` object in list responses (200 responses are typed only as a bare array), so a client
+    cannot read a total count or a next-page link and must page until a short page returns.
+sorting:
+  style: json-api-bracket
+  params:
+  - name: sort[presentations][dateCreated]
+  - name: sort[presentations][dateModified]
+  - name: sort[presentations][name]
+  default: descending by dateModified
+  applies_to: [GET /presentations]
+filtering:
+  style: json-api-bracket
+  params:
+  - name: filter[presentations][name]
+    description: Presentations whose name equals or contains the specified value.
+  - name: filter[presentations][ownerId]
+    description: Presentations owned by the specified owner.
+  - name: filter[presentations][dateCreated]
+    description: Presentations created within the specified period.
+  - name: filter[presentations][dateModified]
+    description: Presentations modified within the specified period.
+  - name: filter[presentations][bookmarked]
+    type: boolean
+    description: Restricts to bookmarked presentations.
+  - name: filter[presentations][groups]
+    description: Filters on the presentation's groups.
+  - name: filter[presentations][tags]
+    description: Filters on the presentation's tags.
+  - name: filter[users][emails]
+    description: Users whose email is in the supplied list.
+  - name: filter[insights][activityDate]
+    required: true
+    description: >-
+      Filters activities for the previous 24 hours starting from the given date. REQUIRED — the
+      Insights endpoint cannot be called without a date window.
+field_expansion:
+  supported: false
+sparse_fieldsets:
+  supported: false
+  note: JSON:API defines `fields[TYPE]`; ClearSlide declares no such parameter.
+metadata:
+  supported: false
+request_tracing:
+  provider_header: null
+  edge_header: x-amzn-requestid
+  method: probed
+  note: >-
+    ClearSlide publishes no request-id convention. AWS API Gateway returns `x-amzn-requestid` (and
+    `x-amzn-trace-id` on some paths) at the edge, which is the only correlation handle available
+    to a caller, and it is undocumented.
 versioning:
-  style: portal-version
+  api_version_in_path: false
+  scheme: docs-portal-version
   current: v2.0.0
+  spec_info_version: 0.0.1
+  discrepancy: >-
+    The developer portal is versioned v2.0.0 (with a v1.0.0 still selectable), while the published
+    Swagger document declares info.version 0.0.1. The SCIM documentation shows a `/v2/` path
+    segment (platform.clearslide.com/v2/scim/Users) that the Platform API paths do not use.
+    Three version signals disagree.
   cross_ref: lifecycle/clearslide-lifecycle.yml
 error_envelope:
-  documented: false
+  documented: true
+  format: json-api-errors
+  rfc9457: false
+  shapes: 5
+  cross_ref: errors/clearslide-problem-types.yml
+  note: >-
+    Five distinct error shapes across the platform — see the error catalog. There is no single
+    envelope a client can code against.
 rate_limiting:
   documented: false
+  headers: []
+  cross_ref: rate-limits/clearslide-rate-limits.yml
 uploads:
-  style: s3-presigned
-  notes: >-
-    File uploads use a two-step flow: POST /upload returns temporary credentials to upload the
-    file directly to Amazon S3, then GET /upload/{uploadID} checks status.
+  style: s3-presigned-two-step
+  steps:
+  - POST /upload with fileName + fileSize returns temporary Amazon S3 credentials and post params.
+  - Client PUTs/POSTs the file directly to Amazon S3 using those credentials.
+  - GET /upload/{uploadID} polls the processing status.
+  docs: https://developer.clearslide.com/docs/upload-api
+  note: >-
+    Status is polled, not pushed — there is no webhook or callback when processing completes.
+webhooks:
+  supported: false
+  evidence: >-
+    No webhook, callback, event or subscription page exists anywhere in the developer portal
+    llms.txt index, and the Swagger document declares no callbacks.
+spec_defects:
+  summary: Defects observed in ClearSlide's own published contract, recorded as-found.
+  items:
+  - id: invalid-json
+    detail: >-
+      The published document at docs.platform.clearslide.com/clearslide-api.json is not valid
+      JSON. Both `"host": platform.clearslide.com,` and `"basePath": /,` are unquoted bare
+      scalars. A standards-compliant parser rejects the file outright. The copy saved to
+      openapi/_original/ quotes exactly those two values and changes nothing else; the pristine
+      bytes are preserved alongside it as .json.orig.
+  - id: no-security-definitions
+    detail: >-
+      The document declares no `securityDefinitions` and no `security` block, despite the API
+      being OAuth 2.0 protected. Auth is expressed only as a per-operation header parameter, so
+      tooling cannot discover the auth model from the contract.
+  - id: no-operation-ids
+    detail: Not one of the six operations declares an operationId.
+  - id: duplicate-error-schemas
+    detail: >-
+      `error` and `Error` are separately declared with identical properties; different operations
+      reference different ones.
+  - id: untyped-success-responses
+    detail: >-
+      The 200 responses for /presentations, /links, /insights and /users are typed as a bare
+      `array` with no item schema, so the richest entity definitions in the document are
+      unreachable from any response.
+  - id: placeholder-descriptions
+    detail: The `code` and `message` fields of the error schemas are both described as "tbd".
+  - id: typo-in-schema-name
+    detail: The definition for video objects is spelled `Vidoes`.

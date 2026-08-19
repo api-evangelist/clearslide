@@ -1,0 +1,259 @@
+{
+  "item": [
+    {
+      "id": "fc239a51-5625-48af-a6a3-79c7c734b0df",
+      "name": "Upload",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "679a9c15-93b7-45dd-b861-6a88eaa4ab08",
+          "name": "Get upload credentials",
+          "request": {
+            "name": "Get upload credentials",
+            "description": {
+              "content": "Get credentials to upload your file to ClearSlide (Amazon S3).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "upload"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.platform.clearslide.com/oauth/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://oauth.platform.clearslide.com/oauth/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://oauth.platform.clearslide.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d1c9de3c-d6ad-472e-8009-9a2ba661b64e",
+              "name": "Temporary upload credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "upload"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6bdb8d0e-9c42-4001-9b19-dffaad0d92fe",
+          "name": "Check upload status",
+          "request": {
+            "name": "Check upload status",
+            "description": {
+              "content": "Check the status of an uploaded file.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "upload",
+                ":uploadID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "uploadID",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.platform.clearslide.com/oauth/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://oauth.platform.clearslide.com/oauth/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://oauth.platform.clearslide.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "52f3a597-b5da-4db1-89bf-d9346e28d39d",
+              "name": "Upload status.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "upload",
+                    ":uploadID"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "uploadID",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://platform.clearslide.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "read write"
+      },
+      {
+        "key": "redirect_uri",
+        "value": "https://oauth.platform.clearslide.com/oauth/token"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://oauth.platform.clearslide.com/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://oauth.platform.clearslide.com/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "394b0383-2c58-492e-a93f-103952050c48",
+    "name": "ClearSlide Platform Insights Upload API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "ClearSlide Public APIs give customers and partners programmatic access to core ClearSlide features, including uploading content, listing presentations, creating trackable links, getting engagement insights, listing users, and hosting scheduled meetings. Transcribed from the public ClearSlide developer portal (ReadMe). ClearSlide is a Bigtincan sales engagement platform.\n\nContact Support:\n Name: ClearSlide API Support\n Email: apisupport@clearslide.com",
+      "type": "text/plain"
+    }
+  }
+}

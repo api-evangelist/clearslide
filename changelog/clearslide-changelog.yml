@@ -1,12 +1,43 @@
-generated: '2026-07-18'
+generated: '2026-08-13'
 method: searched
 source: https://developer.clearslide.com/changelog
 scheme: readme-changelog
 current_version: v2.0.0
 url: https://developer.clearslide.com/changelog
 whats_new: https://developer.clearslide.com/docs/whats-new
+entry_count: 0
 entries: []
+undated_changes:
+  source: https://developer.clearslide.com/docs/whats-new
+  note: >-
+    The only change content ClearSlide publishes sits on the "What's New" guide page, and carries
+    no dates or version numbers. Recorded verbatim, unstructured, because there is nothing to
+    structure.
+  highlights:
+  - >-
+    Added new fields `copiesNumber` and `downloadsNumber` in response to the /presentation endpoint
+    in case if copies and downloads counting is enabled.
+  - Added more informative responses for HTTP errors.
+  cross_ref: >-
+    Neither `copiesNumber` nor `downloadsNumber` appears in the `presentation` schema of the
+    published Swagger document, so the contract has not been updated to match this announcement.
+evidence:
+- url: https://developer.clearslide.com/changelog
+  status: 200
+  finding: >-
+    The changelog page renders and is linked from the portal's primary navigation, but its body
+    reads "Looks like there are no posts!" — zero entries have ever been published to it.
+- url: https://developer.clearslide.com/docs/whats-new
+  status: 200
+  finding: Two undated bullet points, no version numbers, no dates.
+findings:
+- >-
+  ClearSlide has the changelog surface (ReadMe provides it, it is wired into the nav) and has
+  never posted to it. A consumer cannot determine when anything changed, in which release, or
+  whether a change was breaking.
+- >-
+  The two announced changes on "What's New" are not reflected in the published machine-readable
+  contract, so the docs and the spec disagree about what the API returns.
 notes: >-
-  ClearSlide publishes a dated developer changelog via its ReadMe portal (developer.clearslide.com/changelog)
-  and a "What's New" page. Individual dated entries were not transcribed in this pass; the live
-  changelog is the source of truth.
+  The ChangeLog pointer in apis.yml is retained because a real, provider-published change surface
+  exists at a stable URL — but it is empty, and this artifact is the record of that.

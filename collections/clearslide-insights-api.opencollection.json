@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ClearSlide Platform Insights API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://oauth.platform.clearslide.com/oauth/authorize",
+      "accessTokenUrl": "https://oauth.platform.clearslide.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Insights",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get insights for a sent pitch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.clearslide.com/insights",
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://oauth.platform.clearslide.com/oauth/authorize",
+              "accessTokenUrl": "https://oauth.platform.clearslide.com/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get statistics for a particular sent pitch."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

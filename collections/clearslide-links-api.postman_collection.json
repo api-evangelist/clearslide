@@ -1,0 +1,149 @@
+{
+  "item": [
+    {
+      "id": "76800560-e66d-4d6b-8dee-e2e72e3b8467",
+      "name": "Links",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a8c62bb8-91de-475f-89f0-02703f5a4d73",
+          "name": "Create a trackable link",
+          "request": {
+            "name": "Create a trackable link",
+            "description": {
+              "content": "Creates a trackable link for a presentation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "links"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "read write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://oauth.platform.clearslide.com/oauth/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://oauth.platform.clearslide.com/oauth/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://oauth.platform.clearslide.com/oauth/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4133dd97-f326-4766-8eb4-039ba5000625",
+              "name": "The created trackable link.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://platform.clearslide.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "read write"
+      },
+      {
+        "key": "redirect_uri",
+        "value": "https://oauth.platform.clearslide.com/oauth/token"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://oauth.platform.clearslide.com/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://oauth.platform.clearslide.com/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "45552fa4-b035-47d7-968b-0454ddd7e99e",
+    "name": "ClearSlide Platform Insights Links API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "ClearSlide Public APIs give customers and partners programmatic access to core ClearSlide features, including uploading content, listing presentations, creating trackable links, getting engagement insights, listing users, and hosting scheduled meetings. Transcribed from the public ClearSlide developer portal (ReadMe). ClearSlide is a Bigtincan sales engagement platform.\n\nContact Support:\n Name: ClearSlide API Support\n Email: apisupport@clearslide.com",
+      "type": "text/plain"
+    }
+  }
+}

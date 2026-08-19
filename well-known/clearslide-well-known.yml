@@ -1,7 +1,38 @@
-generated: '2026-07-18'
+generated: '2026-08-13'
 method: searched
-host: https://www.clearslide.com
-documents:
+source: live probes of every ClearSlide host in apis.yml + OpenAPI servers[]
+summary: >-
+  ClearSlide serves exactly one real /.well-known/ document: an RFC 9727 API catalog
+  (application/linkset+json) on the ReadMe developer portal host. Every other well-known
+  path 404s on every host. The prior round probed only www.clearslide.com and recorded a
+  clean sweep of 404s, so this hit was missed.
+hosts:
+- host: https://developer.clearslide.com
+  role: developer portal (ReadMe)
+  documents:
+  - path: /.well-known/api-catalog
+    status: 200
+    content_type: application/linkset+json; charset=utf-8
+    file: clearslide-api-catalog.json
+    spec: RFC 9727
+    note: >-
+      Real linkset naming two service-desc OpenAPI documents. Both advertised hrefs are
+      themselves broken — see defects[] below.
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://www.clearslide.com
+  role: marketing site
+  documents:
   - path: /.well-known/security.txt
     status: 404
   - path: /.well-known/openid-configuration
@@ -12,6 +43,63 @@ documents:
     status: 404
   - path: /.well-known/ai-plugin.json
     status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://platform.clearslide.com
+  role: production API host (AWS API Gateway)
+  documents:
+  - path: /.well-known/api-catalog
+    status: 403
+    note: >-
+      All /.well-known/* paths return AWS API Gateway's {"message":"Missing Authentication
+      Token"} 403 — the gateway has no such route, not a gated document.
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/openid-configuration
+    status: 403
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+  - path: /.well-known/agent-card.json
+    status: 403
+  - path: /.well-known/agent.json
+    status: 403
+- host: https://docs.platform.clearslide.com
+  role: legacy Swagger UI docs host (redirect target of platform.clearslide.com)
+  documents:
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+defects:
+- id: api-catalog-service-desc-empty
+  severity: high
+  summary: >-
+    Both OpenAPI service-desc documents advertised in ClearSlide's own /.well-known/api-catalog
+    return HTTP 200 with a ZERO-BYTE body.
+  urls:
+  - url: https://developer.clearslide.com/openapi/596567bd798ff70035f1c6bf
+    status: 200
+    bytes: 0
+  - url: https://developer.clearslide.com/openapi/5de676c15698f4005879e719
+    status: 200
+    bytes: 0
+  impact: >-
+    A conforming RFC 9727 consumer that follows the catalog to fetch the machine-readable
+    contract receives an empty document and a success status. This is a soft-200: the discovery
+    surface is present and correct, and the thing it points at is not there. No credit is taken
+    for these two documents.
+  checked: '2026-08-13'
 notes: >-
-  No /.well-known/ discovery documents are published on www.clearslide.com. OAuth endpoints are
-  documented directly in the developer portal rather than via an RFC 8414/OIDC discovery document.
+  ClearSlide's OAuth endpoints (oauth.platform.clearslide.com/oauth/authorize and /oauth/token)
+  are documented in prose on the developer portal and on docs.platform.clearslide.com/oauth2.html
+  rather than advertised via an RFC 8414 or OIDC discovery document.

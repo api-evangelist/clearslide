@@ -1,32 +1,126 @@
-generated: '2026-07-18'
+generated: '2026-08-13'
 method: searched
-source: https://www.clearslide.com/about/security/
+source: >-
+  https://www.clearslide.com/about/security/, https://developer.clearslide.com/docs/scim-at-clearslide,
+  https://developer.clearslide.com/docs/oauth-20, https://docs.platform.clearslide.com/oauth2.html,
+  openapi/_original/clearslide-platform-api-swagger.json
 standards:
-  - id: oauth2
-    conforms: true
-    evidence: OpenAPI securityScheme type oauth2 (authorizationCode + password flows), documented at developer.clearslide.com/docs/oauth-20
-  - id: oidc
-    conforms: false
-  - id: scim2
-    conforms: true
-    evidence: "SCIM at ClearSlide documented at developer.clearslide.com/docs/scim-at-clearslide"
-  - id: rfc9457-problem-details
-    conforms: false
-  - id: soc2
-    conforms: true
-    evidence: "Security and confidentiality controls certified and audited SOC 2, verified annually against AICPA Trust Services Criteria (about/security)"
-  - id: gdpr
-    conforms: true
-    evidence: "GDPR addressed on the ClearSlide security page"
-  - id: privacy-shield
-    conforms: true
-    evidence: "EU-U.S. and Swiss-U.S. Privacy Shield certifications listed (about/security)"
-  - id: truste
-    conforms: true
-    evidence: "Privacy standards certified by TRUSTe (about/security)"
-  - id: iso-27001
-    conforms: false
-  - id: pci-dss
-    conforms: false
-  - id: hipaa
-    conforms: false
+- id: oauth2
+  conforms: true
+  evidence: >-
+    OAuth 2.0 Authorization Code grant (RFC 6749 §4.1) plus refresh_token grant, documented at
+    developer.clearslide.com/docs/oauth-20 and docs.platform.clearslide.com/oauth2.html.
+    Authorization endpoint https://oauth.platform.clearslide.com/oauth/authorize, token endpoint
+    /oauth/token, client authentication via HTTP Basic (RFC 2617 §2), scopes read + write,
+    opaque UUID access tokens with expires_in 3600. Live probe of the token endpoint returns
+    WWW-Authenticate: Basic realm="oauth2/client" (Spring Security OAuth).
+  caveats:
+  - >-
+    The published Swagger document declares NO securityDefinitions, so the OAuth model is not
+    discoverable from the machine-readable contract — only from prose.
+  - >-
+    Platform API operations take the token in a custom `authorizationToken` header rather than the
+    RFC 6750 `Authorization: Bearer` header, so bearer-token usage is non-standard.
+  - >-
+    The previously recorded `password` (Resource Owner Password Credentials) grant is not
+    documented on either published OAuth page; only authorization_code and refresh_token are.
+- id: rfc6750-bearer
+  conforms: false
+  evidence: >-
+    Tokens are passed in a custom `authorizationToken` header on Platform API operations, not the
+    RFC 6750 Authorization: Bearer header. The SCIM surface does use a standard `authorization`
+    header, so the platform is split on this.
+- id: rfc8414-oauth-metadata
+  conforms: false
+  evidence: /.well-known/oauth-authorization-server returns 404 on every ClearSlide host.
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration returns 404 on every ClearSlide host.
+- id: scim2
+  conforms: true
+  evidence: >-
+    SCIM 2.0 (RFC 7644) implementation documented at developer.clearslide.com/docs/scim-at-clearslide,
+    base https://platform.clearslide.com/v2/. Serves /scim/ServiceProviderConfigs, /scim/Schemas
+    (including urn:ietf:params:scim:schemas:core:2.0:User and :Group), full /scim/Users and
+    /scim/Groups CRUD, and PatchOp (urn:ietf:params:scim:api:messages:2.0:PatchOp) for group
+    membership add/remove.
+  caveats:
+  - PATCH /scim/Users is explicitly "Not Supported right now".
+  - Filtering support is minimal — only the `eq` operator on `userName` for Users; Groups support no filter at all.
+  - DELETE /scim/Users deactivates and hides rather than deleting, and a non-standard PUT /scim/Users/{id}/activate is added to reverse it.
+- id: json-api
+  conforms: partial
+  evidence: >-
+    The API declares produces: application/vnd.api+json globally and implements JSON:API idioms —
+    page[size]/page[number] pagination, sort[type][field] and filter[type][field] bracket
+    parameters, resource objects with {type,id,attributes,links,relationships}, an `included`
+    sibling array, and error objects carrying source.pointer.
+  caveats:
+  - >-
+    Applied inconsistently: `user` and `upload` are JSON:API resource objects while `presentation`
+    is a flat object, in the same API under the same media type.
+  - Requests are consumed as application/json, not application/vnd.api+json.
+  - The `relationships` member is declared as an empty object and expresses nothing.
+  - No top-level meta or links object on list responses, so pagination is not navigable.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    No application/problem+json anywhere. Five distinct error shapes are in use across the
+    platform — see errors/clearslide-problem-types.yml.
+- id: rfc9727-api-catalog
+  conforms: partial
+  evidence: >-
+    developer.clearslide.com/.well-known/api-catalog returns HTTP 200 with a valid
+    application/linkset+json document naming two service-desc OpenAPI resources.
+  caveats:
+  - >-
+    Both advertised service-desc URLs return HTTP 200 with a zero-byte body, so the catalog
+    resolves to nothing. The discovery surface conforms; the resources it points at are broken.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on every ClearSlide host.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No deprecation or Sunset header policy is published.
+- id: a2a-agent-card
+  conforms: false
+  evidence: >-
+    /.well-known/agent-card.json and /.well-known/agent.json return 404 (or an AWS API Gateway 403)
+    on all four ClearSlide hosts.
+- id: openapi-3
+  conforms: false
+  evidence: >-
+    The only machine-readable contract ClearSlide publishes is Swagger 2.0 (info.version 0.0.1),
+    superseded by OpenAPI 3.0 in 2017. It is additionally not valid JSON as served.
+- id: soc2
+  conforms: true
+  evidence: >-
+    Security and confidentiality controls certified and audited SOC 2, verified annually against
+    AICPA Trust Services Criteria (clearslide.com/about/security).
+- id: gdpr
+  conforms: true
+  evidence: GDPR addressed on the ClearSlide security page.
+- id: privacy-shield
+  conforms: true
+  evidence: EU-U.S. and Swiss-U.S. Privacy Shield certifications listed (about/security).
+  caveats:
+  - >-
+    The EU-U.S. Privacy Shield framework was invalidated by the CJEU in July 2020 (Schrems II) and
+    the Swiss-U.S. framework was declared inadequate in September 2020. A live certification claim
+    to a defunct framework is a staleness signal on this page, not a current compliance posture.
+- id: truste
+  conforms: true
+  evidence: Privacy standards certified by TRUSTe (about/security).
+- id: iso-27001
+  conforms: false
+- id: pci-dss
+  conforms: false
+- id: hipaa
+  conforms: false
+- id: fedramp
+  conforms: false
+notes: >-
+  Compliance claims are read from ClearSlide's own security page, which is still served under the
+  ClearSlide brand while the pricing and corporate pages now serve Bigtincan. Certification claims
+  on that page have not been re-dated by the provider and at least one (Privacy Shield) refers to
+  a framework that no longer exists.

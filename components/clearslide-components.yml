@@ -1,0 +1,129 @@
+generated: '2026-08-13'
+method: searched
+source: https://developer.clearslide.com/docs/buttons-overview
+docs: https://developer.clearslide.com/docs/buttons-overview
+summary: >-
+  ClearSlide publishes a family of three "embeddable action buttons" — a client-side integration
+  surface distinct from the REST API. They are not a JavaScript SDK, web-component library or
+  hosted iframe: each button is a plain HTML <form> that POSTs to a public www.clearslide.com
+  endpoint and hands the end user off into the ClearSlide web application with context
+  pre-populated. No script tag, no loader library, no npm package.
+component_count: 3
+distribution:
+  style: html-form-post
+  loader_library: null
+  cdn: null
+  npm: null
+  note: >-
+    Integration is copy-paste HTML. Because there is no versioned artifact of any kind, a consumer
+    cannot pin, diff or detect a change to this surface.
+auth:
+  model: client-id
+  parameter: clientId
+  required: true
+  note: >-
+    `clientId` is an alpha-numeric string identifying a ClearSlide partner. It is issued by
+    emailing apisupport@clearslide.com after signing up for a ClearSlide account. It is submitted
+    in a hidden form field in the browser, so it is public by construction — it identifies the
+    partner rather than authenticating the request.
+family:
+  name: Embeddable ClearSlide Buttons
+  components:
+  - name: Launch ClearSlide Meeting
+    docs: https://developer.clearslide.com/docs/launch-meeting
+    action: https://www.clearslide.com/public/start-meeting
+    method: POST
+    target: _blank
+    parameters:
+    - name: clientId
+      required: true
+      description: Specifies which partner app is requesting access to ClearSlide functionality.
+    - name: deckId
+      required: false
+      description: >-
+        Lands the end user in the ClearSlide meeting experience with the target deck pre-loaded.
+        Deck ids come from the Presentations API.
+    - name: companyName
+      required: false
+      description: Pre-populates the target company name in the post-meeting edit recap.
+    - name: companyCrmId
+      required: false
+      description: Associates a CRM company id (account/opportunity) with the ClearSlide Meeting.
+    - name: personCrmId
+      required: false
+      description: Associates a CRM person id (contact/lead) with the ClearSlide Meeting.
+    - name: externalId
+      required: false
+      description: Associates a unique id with the ClearSlide Meeting.
+  - name: Compose ClearSlide Email
+    docs: https://developer.clearslide.com/docs/compose-email
+    action: https://www.clearslide.com/public/compose-email
+    method: POST
+    target: _blank
+    parameters:
+    - name: clientId
+      required: true
+      description: Specifies which partner app is requesting access to ClearSlide functionality.
+    - name: deckId
+      required: false
+      description: Lands the end user in the ClearSlide email experience with the target deck pre-loaded.
+    - name: companyName
+      required: false
+      description: Pre-populates the target company name in the email.
+    - name: emailRecipients
+      required: false
+      description: Pre-populates the target email recipients.
+    - name: emailSubject
+      required: false
+      description: Pre-populates the target email subject.
+    - name: emailMessage
+      required: false
+      description: Pre-populates the target email message.
+    - name: companyCrmId
+      required: false
+      description: Associates a CRM company id (account/opportunity) with the ClearSlide Email.
+    - name: personCrmId
+      required: false
+      description: Associates a CRM person id (contact/lead) with the ClearSlide Email.
+    - name: externalId
+      required: false
+      description: Associates a unique id with the ClearSlide Email.
+  - name: Create ClearSlide Link
+    docs: https://developer.clearslide.com/docs/create-link
+    action: https://www.clearslide.com/public/create-link
+    method: POST
+    target: _blank
+    parameters:
+    - name: clientId
+      required: true
+      description: Specifies which partner app is requesting access to ClearSlide functionality.
+    - name: deckId
+      required: false
+      description: Lands the end user in the ClearSlide link experience with the target deck pre-loaded.
+    - name: companyName
+      required: false
+      description: Pre-populates the target company name.
+    - name: recipientName
+      required: false
+      description: Pre-populates the target recipient name.
+    - name: companyCrmId
+      required: false
+      description: Associates a CRM company id (account/opportunity) with the ClearSlide Link.
+    - name: personCrmId
+      required: false
+      description: Associates a CRM person id (contact/lead) with the ClearSlide Link.
+    - name: externalId
+      required: false
+      description: Associates a unique id with the ClearSlide Link.
+browser_support:
+  statement: >-
+    "ClearSlide APIs are supported on the latest versions of Chrome, Firefox, Safari, Internet
+    Explorer, and Edge. Please note that Internet Explorer 10 and below are not supported."
+  source: https://developer.clearslide.com/docs/buttons-overview
+  note: >-
+    The support statement still names Internet Explorer, which Microsoft retired in 2022 — an
+    indicator of the age of this documentation set.
+agent_relevance: >-
+  This surface is explicitly human-in-the-loop: every button ends by opening the ClearSlide web
+  app in a new tab for a person to act in. It is not callable by an agent and confers no agentic
+  capability, which is why it is recorded as Components and not as an API.
