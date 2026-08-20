@@ -37,6 +37,17 @@ tags:
 - Analytics
 - Meetings
 - CRM
+- Authentication
+- SCIM
+tags_raw:
+- Company
+- Sales Engagement
+- Sales Enablement
+- Content Management
+- Presentations
+- Analytics
+- Meetings
+- CRM
 - OAuth
 - SCIM
 specificationVersion: '0.23'
@@ -129,6 +140,8 @@ apis:
   humanURL: https://developer.clearslide.com/
   baseURL: https://platform.clearslide.com
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
@@ -151,6 +164,12 @@ apis:
   humanURL: https://developer.clearslide.com/docs/scim-at-clearslide
   baseURL: https://platform.clearslide.com/v2
   tags:
+  - SCIM
+  - User
+  - Group
+  - Provisioning
+  - Identity
+  tags_raw:
   - SCIM
   - Users
   - Groups
