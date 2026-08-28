@@ -9,6 +9,18 @@ description: >-
   and reserve and manage scheduled meetings. The API uses OAuth 2.0 and is documented on a public
   ReadMe developer portal at developer.clearslide.com. ClearSlide was originally an a16z-backed
   company and is profiled here in the API Evangelist network.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: approval
