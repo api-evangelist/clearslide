@@ -200,6 +200,11 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: ParentCompany
+  url: https://apis.io/providers/showpad/
+  name: Showpad
+  x-relationship: acquired
+  x-evidence: "https://www.clearslide.com/ now redirects to showpad.com; the description names Bigtincan, who has since been acquired — ParentCompany records the CURRENT owner (roadmap#390, Kin 2026-09-18)"
 - type: Website
   url: https://www.clearslide.com/
 - type: DeveloperPortal
