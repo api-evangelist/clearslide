@@ -1,12 +1,7 @@
 {
   "provider": "clearslide",
   "sources": [
-    "clearslide-insights-api-openapi.yml",
-    "clearslide-links-api-openapi.yml",
-    "clearslide-meetings-api-openapi.yml",
-    "clearslide-presentations-api-openapi.yml",
-    "clearslide-upload-api-openapi.yml",
-    "clearslide-users-api-openapi.yml"
+    "_original/clearslide-openapi.yml"
   ],
   "outputs": [
     "clearslide-insights-api-openapi.yml",
@@ -19,6 +14,19 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "clearslide-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/clearslide-platform-api-swagger.json: archived document superseded by a larger archived document",
+    "clearslide-insights-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "clearslide-links-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "clearslide-meetings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "clearslide-presentations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "clearslide-upload-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "clearslide-users-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
