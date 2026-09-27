@@ -40,6 +40,9 @@ x-source: vc-portfolio
 x-backed-by:
 - a16z
 x-parent-company: Bigtincan
+x-docs-platform: readme
+x-docs-platform-confidence: high
+x-docs-platform-checked: 2026-09-24
 tags:
 - Company
 - Sales Engagement
