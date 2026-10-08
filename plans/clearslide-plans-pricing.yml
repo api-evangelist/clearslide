@@ -91,3 +91,21 @@ evidence:
 notes: >-
   Recorded as sales-gated rather than absent: the tiers are named and their feature sets are
   published, but no monetary value is. plan_count counts the two named platform editions.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models: []
+  units: []
+  plans:
+  - name: Essential
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Elite
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
