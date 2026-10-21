@@ -1,0 +1,150 @@
+generated: '2026-10-20'
+method: generated
+source: openapi/clearslide-insights-api-openapi.yml, openapi/clearslide-links-api-openapi.yml,
+  openapi/clearslide-meetings-api-openapi.yml, openapi/clearslide-presentations-api-openapi.yml,
+  openapi/clearslide-upload-api-openapi.yml, openapi/clearslide-users-api-openapi.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 9
+  by_action_class:
+    connected: 5
+    acting: 4
+  by_consequence:
+    read: 5
+    write: 4
+  human_in_the_loop_required: 0
+operations:
+- path: /insights
+  method: get
+  operationId: getInsights
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /links
+  method: post
+  operationId: postLinks
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /meeting/scheduled
+  method: get
+  operationId: getScheduledMeetings
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /meeting/scheduled
+  method: post
+  operationId: postScheduledMeeting
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /meeting/scheduled/{inviteMailVid}
+  method: put
+  operationId: putScheduledMeeting
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /presentations
+  method: get
+  operationId: getPresentations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /upload
+  method: post
+  operationId: postUpload
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /upload/{uploadID}
+  method: get
+  operationId: getUploadStatus
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /users
+  method: get
+  operationId: getUsers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - read
+    token:
+      max-ttl: 3600
+    audit: none

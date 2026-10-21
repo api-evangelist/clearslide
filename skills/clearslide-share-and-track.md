@@ -1,5 +1,5 @@
 ---
-name: Share a presentation and track engagement
+name: share-and-track
 description: Create a trackable link for a ClearSlide presentation and read back engagement insights.
 api: openapi/clearslide-openapi.yml
 operations: [getPresentations, postLinks, getInsights]

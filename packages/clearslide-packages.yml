@@ -1,5 +1,5 @@
 generated: '2026-08-13'
-method: searched
+method: none
 source: >-
   npm registry search, PyPI, RubyGems, Packagist, crates.io, GitHub org github.com/ClearSlide,
   and the ClearSlide developer portal SDK/sample pages

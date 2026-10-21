@@ -1,0 +1,45 @@
+generated: '2026-10-20'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/clearslide-insights-api-openapi.yml
+- openapi/clearslide-links-api-openapi.yml
+- openapi/clearslide-meetings-api-openapi.yml
+- openapi/clearslide-presentations-api-openapi.yml
+- openapi/clearslide-upload-api-openapi.yml
+vocabulary:
+  name: ClearSlide Domain Vocabulary
+  description: 'Terms declared by ClearSlide''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-20'
+  terms:
+  - term: Insights
+    definition: 'Resource group in the contract; its operation GET /insights: Get statistics for a particular sent pitch.'
+    tags:
+    - Resource Group
+    source: openapi/clearslide-insights-api-openapi.yml
+  - term: Links
+    definition: 'Resource group in the contract; its operation POST /links: Creates a trackable link for a presentation.'
+    tags:
+    - Resource Group
+    source: openapi/clearslide-links-api-openapi.yml
+  - term: Meetings
+    definition: 'Resource group in the contract; its operation GET /meeting/scheduled: List all scheduled meetings.'
+    tags:
+    - Resource Group
+    source: openapi/clearslide-meetings-api-openapi.yml
+  - term: Presentations
+    definition: 'Resource group in the contract; its operation GET /presentations: Returns a list of `presentation` objects that match query criteria.'
+    tags:
+    - Resource Group
+    source: openapi/clearslide-presentations-api-openapi.yml
+  - term: Upload
+    definition: 'Resource group in the contract; its operation POST /upload: Get credentials to upload your file to ClearSlide (Amazon S3).'
+    tags:
+    - Resource Group
+    source: openapi/clearslide-upload-api-openapi.yml
+  - term: Users
+    definition: 'Resource group in the contract; its operation GET /users: Returns a list of `user` objects that match query criteria.'
+    tags:
+    - Resource Group
+    source: openapi/clearslide-users-api-openapi.yml

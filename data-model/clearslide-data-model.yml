@@ -259,3 +259,4 @@ spec_defects:
   detail: >-
     Presentation, Insight and User are defined in full but the 200 responses that would return
     them are typed as bare untyped arrays, so no generated client can reach these definitions.
+relationships: []

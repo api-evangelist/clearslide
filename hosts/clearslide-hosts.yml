@@ -1,0 +1,180 @@
+generated: '2026-10-20'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 13
+  own: 6
+  other_domain: 6
+  platform: 1
+  roles:
+  - api
+  - docs
+  - marketing
+  - other
+  - portal
+  - source
+  - status
+  - support
+  - website
+hosts:
+- host: api.apis.io
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: apis.io
+  role: api
+  relation: other-domain
+- host: api.clearslide.com
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: clearslide.com
+  role: api
+  relation: own
+- host: api.showpad.com
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: showpad.com
+  role: api
+  relation: other-domain
+- host: apis.io
+  found_by:
+  - pointer
+  - probed
+  - well-known
+  types:
+  - ParentCompany
+  serves: []
+  registrable_domain: apis.io
+  role: api
+  relation: other-domain
+- host: developer.clearslide.com
+  found_by:
+  - pointer
+  - apis[]
+  - probed
+  - site-links
+  - docs-index
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types:
+  - DeveloperPortal
+  - Documentation
+  - APIReference
+  - GettingStarted
+  - ChangeLog
+  - Support
+  serves:
+  - docs
+  - documentation
+  vendor: readme
+  registrable_domain: clearslide.com
+  role: portal
+  relation: own
+- host: developer.showpad.com
+  found_by:
+  - probed
+  - site-links
+  - docs-index
+  - spec-found
+  types: []
+  serves:
+  - docs
+  - spec
+  registrable_domain: showpad.com
+  role: portal
+  relation: other-domain
+- host: docs.platform.clearslide.com
+  found_by:
+  - probed
+  - site-links
+  - docs-index
+  - well-known
+  types: []
+  serves:
+  - docs
+  registrable_domain: clearslide.com
+  role: docs
+  relation: own
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubOrganization
+  serves: []
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: help.showpad.com
+  found_by:
+  - probed
+  - site-links
+  - docs-index
+  - well-known
+  types: []
+  serves:
+  - docs
+  registrable_domain: showpad.com
+  role: support
+  relation: other-domain
+- host: platform.clearslide.com
+  found_by:
+  - apis[]
+  - probed
+  - contract-discovery
+  - well-known
+  types: []
+  serves:
+  - api
+  registrable_domain: clearslide.com
+  role: other
+  relation: own
+- host: status.clearslide.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - well-known
+  types:
+  - StatusPage
+  serves: []
+  registrable_domain: clearslide.com
+  role: status
+  relation: own
+- host: www.clearslide.com
+  found_by:
+  - pointer
+  - probed
+  - well-known
+  - vendor-detect
+  types:
+  - Website
+  - Login
+  - Pricing
+  serves:
+  - cdn
+  - hosting
+  vendor: cloudflare
+  registrable_domain: clearslide.com
+  role: website
+  relation: own
+- host: www.showpad.com
+  found_by:
+  - pointer
+  - probed
+  - well-known
+  types:
+  - PrivacyPolicy
+  - Blog
+  - Security
+  - Newsroom
+  serves: []
+  registrable_domain: showpad.com
+  role: marketing
+  relation: other-domain

@@ -1,5 +1,5 @@
 ---
-name: Upload content to ClearSlide
+name: upload-content
 description: Get S3 upload credentials, upload a file, and confirm the upload status.
 api: openapi/clearslide-openapi.yml
 operations: [postUpload, getUploadStatus]

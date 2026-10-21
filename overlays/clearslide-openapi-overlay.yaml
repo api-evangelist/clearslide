@@ -2,7 +2,7 @@ overlay: 1.0.0
 info:
   title: API Evangelist enhancements for ClearSlide Platform API
   version: 1.0.0
-extends: openapi/clearslide-openapi.yml
+extends: ../openapi/_original/clearslide-openapi.yml
 actions:
   - target: $.info
     update:

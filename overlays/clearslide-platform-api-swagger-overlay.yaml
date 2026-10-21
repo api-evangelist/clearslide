@@ -2,7 +2,7 @@ overlay: 1.0.0
 info:
   title: API Evangelist enhancements for the harvested ClearSlide Platform API (Swagger 2.0)
   version: 1.0.0
-extends: openapi/_original/clearslide-platform-api-swagger.json
+extends: ../openapi/_original/clearslide-platform-api-swagger.json
 x-apievangelist:
   generated: '2026-08-13'
   method: generated

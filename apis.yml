@@ -1,5 +1,7 @@
 aid: clearslide
+
 name: ClearSlide
+
 description: >-
   ClearSlide is a sales engagement platform, now part of Bigtincan, that unifies content
   management, communications (email, web conferencing, screen share), and real-time engagement
@@ -9,6 +11,7 @@ description: >-
   and reserve and manage scheduled meetings. The API uses OAuth 2.0 and is documented on a public
   ReadMe developer portal at developer.clearslide.com. ClearSlide was originally an a16z-backed
   company and is profiled here in the API Evangelist network.
+
 deliveryModel:
   model: saas
   open_source: false
@@ -21,6 +24,7 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+
 accessModel:
   pricing: unknown
   onboarding: approval
@@ -33,16 +37,26 @@ accessModel:
   - authentication
   generated: '2026-07-22'
   method: derived
+
 image: https://www.clearslide.com/wp-content/themes/clearslide/images/logo.svg
+
 url: https://raw.githubusercontent.com/api-evangelist/clearslide/refs/heads/main/apis.yml
+
 x-type: company
+
 x-source: vc-portfolio
+
 x-backed-by:
 - a16z
+
 x-parent-company: Bigtincan
+
 x-docs-platform: readme
+
 x-docs-platform-confidence: high
+
 x-docs-platform-checked: 2026-09-24
+
 tags:
 - Company
 - Sales Engagement
@@ -54,6 +68,7 @@ tags:
 - CRM
 - Authentication
 - SCIM
+
 tags_raw:
 - Company
 - Sales Engagement
@@ -65,9 +80,107 @@ tags_raw:
 - CRM
 - OAuth
 - SCIM
+
 specificationVersion: '0.23'
+
 created: '2026-07-17'
+
 modified: '2026-08-13'
+
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+- FN: APIs.json
+  email: info@apis.io
+
+common:
+- type: DataModel
+  url: data-model/clearslide-data-model.yml
+- type: PrivacyPolicy
+  url: https://www.showpad.com/privacy-policy
+- type: Blog
+  url: https://www.showpad.com/blog
+- type: AgenticAccess
+  url: agentic-access/clearslide-agentic-access.yml
+- type: Spectral
+  url: rules/clearslide-rules.yml
+- type: Vocabulary
+  url: vocabulary/clearslide-vocabulary.yml
+- type: Security
+  url: https://www.showpad.com/security
+- type: AgentCard
+  url: a2a/clearslide-a2a.yml
+- type: Hosts
+  url: hosts/clearslide-hosts.yml
+- type: Vendors
+  url: vendors/clearslide-vendors.yml
+- type: StatusPage
+  url: http://status.clearslide.com/
+- type: Newsroom
+  url: https://www.showpad.com/press
+- type: ParentCompany
+  url: https://apis.io/providers/showpad/
+  name: Showpad
+  x-relationship: acquired
+  x-evidence: "https://www.clearslide.com/ now redirects to showpad.com; the description names Bigtincan, who has since been acquired — ParentCompany records the CURRENT owner (roadmap#390, Kin 2026-09-18)"
+- type: Website
+  url: https://www.clearslide.com/
+- type: DeveloperPortal
+  url: https://developer.clearslide.com/
+- type: Documentation
+  url: https://developer.clearslide.com/docs/introduction
+- type: APIReference
+  url: https://developer.clearslide.com/reference
+- type: GettingStarted
+  url: https://developer.clearslide.com/docs/getting-started-1
+- type: ChangeLog
+  url: https://developer.clearslide.com/changelog
+- type: Support
+  url: https://developer.clearslide.com/discuss
+- type: Login
+  url: https://www.clearslide.com/auth/login
+- type: LLMsTxt
+  url: llms/clearslide-llms.txt
+- type: OpenAPI
+  url: openapi/_original/clearslide-openapi.yml
+- type: Overlay
+  url: overlays/clearslide-openapi-overlay.yaml
+- type: Authentication
+  url: authentication/clearslide-authentication.yml
+- type: OAuthScopes
+  url: scopes/clearslide-scopes.yml
+- type: Conventions
+  url: conventions/clearslide-conventions.yml
+- type: Lifecycle
+  url: lifecycle/clearslide-lifecycle.yml
+- type: Conformance
+  url: conformance/clearslide-conformance.yml
+- type: VulnerabilityDisclosure
+  url: security/clearslide-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/clearslide-domain-security.yml
+- type: WellKnown
+  url: well-known/clearslide-well-known.yml
+- type: X-MCPServerCandidate
+  url: mcp/clearslide-mcp.yml
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
+- type: AgentSkill
+  url: skills/_index.yml
+- type: OpenAPI
+  url: openapi/_original/clearslide-platform-api-swagger.json
+- type: Overlay
+  url: overlays/clearslide-platform-api-swagger-overlay.yaml
+- type: RateLimits
+  url: rate-limits/clearslide-rate-limits.yml
+- type: Plans
+  url: plans/clearslide-plans-pricing.yml
+- type: Components
+  url: components/clearslide-components.yml
+- type: GitHubOrganization
+  url: https://github.com/ClearSlide
+- type: Pricing
+  url: https://www.clearslide.com/pricing/
+
 apis:
 - aid: clearslide:clearslide-insights-api
   name: ClearSlide Insights API
@@ -197,98 +310,9 @@ apis:
     url: authentication/clearslide-authentication.yml
   - type: Conformance
     url: conformance/clearslide-conformance.yml
-maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
-- FN: APIs.json
-  email: info@apis.io
-common:
-- type: ParentCompany
-  url: https://apis.io/providers/showpad/
-  name: Showpad
-  x-relationship: acquired
-  x-evidence: "https://www.clearslide.com/ now redirects to showpad.com; the description names Bigtincan, who has since been acquired — ParentCompany records the CURRENT owner (roadmap#390, Kin 2026-09-18)"
-- type: Website
-  url: https://www.clearslide.com/
-- type: DeveloperPortal
-  url: https://developer.clearslide.com/
-- type: Documentation
-  url: https://developer.clearslide.com/docs/introduction
-- type: APIReference
-  url: https://developer.clearslide.com/reference
-- type: GettingStarted
-  url: https://developer.clearslide.com/docs/getting-started-1
-- type: ChangeLog
-  url: https://developer.clearslide.com/changelog
-- type: Support
-  url: https://developer.clearslide.com/discuss
-- type: Login
-  url: https://www.clearslide.com/auth/login
-- type: TermsOfService
-  url: https://www.clearslide.com/legal/terms/
-- type: PrivacyPolicy
-  url: https://www.clearslide.com/legal/privacy/
-- type: LLMsTxt
-  url: llms/clearslide-llms.txt
-- type: OpenAPI
-  url: openapi/_original/clearslide-openapi.yml
-- type: Overlay
-  url: overlays/clearslide-openapi-overlay.yaml
-- type: Authentication
-  url: authentication/clearslide-authentication.yml
-- type: OAuthScopes
-  url: scopes/clearslide-scopes.yml
-- type: Conventions
-  url: conventions/clearslide-conventions.yml
-- type: Lifecycle
-  url: lifecycle/clearslide-lifecycle.yml
-- type: Conformance
-  url: conformance/clearslide-conformance.yml
-- type: Compliance
-  url: https://www.clearslide.com/about/security/
-- type: VulnerabilityDisclosure
-  url: security/clearslide-vulnerability-disclosure.yml
-- type: Security
-  url: https://www.clearslide.com/about/security/
-- type: DomainSecurity
-  url: security/clearslide-domain-security.yml
-- type: WellKnown
-  url: well-known/clearslide-well-known.yml
-- type: X-MCPServerCandidate
-  url: mcp/clearslide-mcp.yml
-  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
-- type: DataModel
-  url: data-model/clearslide-data-model.yml
-- type: AgentSkill
-  url: skills/_index.yml
-- type: OpenAPI
-  url: openapi/_original/clearslide-platform-api-swagger.json
-- type: Overlay
-  url: overlays/clearslide-platform-api-swagger-overlay.yaml
-- type: Packages
-  url: packages/clearslide-packages.yml
-- type: ErrorCatalog
-  url: errors/clearslide-problem-types.yml
-- type: RateLimits
-  url: rate-limits/clearslide-rate-limits.yml
-- type: Plans
-  url: plans/clearslide-plans-pricing.yml
-- type: Components
-  url: components/clearslide-components.yml
-- type: GitHubOrganization
-  url: https://github.com/ClearSlide
-- type: Pricing
-  url: https://www.clearslide.com/pricing/
-- type: SignUp
-  url: https://www.clearslide.com/freetrial
-- type: Blog
-  url: https://www.clearslide.com/blog/
+
 x-enrichment:
-  date: '2026-08-13'
+  date: '2026-10-20'
   status: enriched
-  artifacts_added: 8
-  pass: local-v1
-  note: >-
-    Contract discovery found a provider-published Swagger 2.0 document (41 schema definitions) at
-    docs.platform.clearslide.com/clearslide-api.json — the redirect target of the API host — plus a
-    real RFC 9727 api-catalog on the developer portal. Both were missed by prior rounds.
+  artifacts_added: 0
+  pass: local-v5
