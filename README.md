@@ -64,10 +64,158 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-ClearSlide is a sales engagement platform, now part of Bigtincan, that unifies content management, communications, and real-time engagement analytics. Its public Platform API (OAuth 2.0, documented at developer.clearslide.com) covers presentations, trackable links, engagement insights, users/SCIM, content upload, and scheduled meetings.
+ClearSlide is a sales engagement platform, now part of Bigtincan, that unifies content management, communications (email, web conferencing, screen share), and real-time engagement analytics so sales teams can make every buyer interaction count. Its public Platform API lets customers and partners programmatically list presentations, create trackable links, retrieve engagement insights, manage users (including SCIM provisioning), upload content to Amazon S3, and reserve and manage scheduled meetings. The API uses OAuth 2.0 and is documented on a public ReadMe developer portal at developer.clearslide.com. ClearSlide was originally an a16z-backed company and is profiled here in the API Evangelist network.
 
-Originally surfaced as an a16z portfolio lead, this profile has been enriched from ClearSlide's public developer portal (llms.txt, OpenAPI, authentication, OAuth scopes, conventions, conformance/compliance, vulnerability disclosure, lifecycle, MCP candidate, data model, and agent skills).
+**Areas:** Company · Sales Engagement · Sales Enablement · Content Management · Presentations · Analytics · Meetings · CRM · Authentication · SCIM
 
-- Developer portal: https://developer.clearslide.com/
-- Parent company: Bigtincan
-- Backed by (origin): a16z
+## ClearSlide on APIs.io
+
+Everything profiled for ClearSlide is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/clearslide/](https://apis.io/providers/clearslide/)** — or go straight to one of the APIs or properties below.
+
+### APIs (7)
+
+- [ClearSlide Insights API](https://apis.io/apis/clearslide/clearslide-insights-api/) — The Insights API from ClearSlide — 1 operation(s) for insights.
+- [ClearSlide Links API](https://apis.io/apis/clearslide/clearslide-links-api/) — The Links API from ClearSlide — 1 operation(s) for links.
+- [ClearSlide Meetings API](https://apis.io/apis/clearslide/clearslide-meetings-api/) — The Meetings API from ClearSlide — 2 operation(s) for meetings.
+- [ClearSlide Presentations API](https://apis.io/apis/clearslide/clearslide-presentations-api/) — The Presentations API from ClearSlide — 1 operation(s) for presentations.
+- [ClearSlide Upload API](https://apis.io/apis/clearslide/clearslide-upload-api/) — The Upload API from ClearSlide — 2 operation(s) for upload.
+- [ClearSlide Users API](https://apis.io/apis/clearslide/clearslide-users-api/) — The Users API from ClearSlide — 1 operation(s) for users.
+- [ClearSlide SCIM API](https://apis.io/apis/clearslide/clearslide-scim-api/) — ClearSlide's SCIM 2.0 (RFC 7644) user and group provisioning API, for automating directory sync from an identity provider. Serves…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [clearslide](https://apis.io/servers/clearslide/clearslide/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Clearslide Agentic Access](https://apis.io/agentic-access/clearslide/clearslide-agentic-access/)
+
+#### Collections (6)
+
+Postman and Open Collection request collections.
+
+- [ClearSlide Platform Insights API](https://apis.io/collections/clearslide/open-clearslide-insights-api/)
+- [ClearSlide Platform Insights Links API](https://apis.io/collections/clearslide/open-clearslide-links-api/)
+- [ClearSlide Platform Insights Meetings API](https://apis.io/collections/clearslide/open-clearslide-meetings-api/)
+- [ClearSlide Platform Insights Presentations API](https://apis.io/collections/clearslide/open-clearslide-presentations-api/)
+- [ClearSlide Platform Insights Upload API](https://apis.io/collections/clearslide/open-clearslide-upload-api/)
+- [ClearSlide Platform Insights Users API](https://apis.io/collections/clearslide/open-clearslide-users-api/)
+
+#### Overlays (2)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Clearslide Openapi Overlay](https://apis.io/overlays/clearslide/clearslide-openapi-overlay/)
+- [Clearslide Platform Api Swagger Overlay](https://apis.io/overlays/clearslide/clearslide-platform-api-swagger-overlay/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [ClearSlide API Rules](https://apis.io/rules/clearslide/clearslide-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Clearslide Authentication](https://apis.io/security/clearslide/clearslide-authentication/)
+- [Clearslide Domain Security](https://apis.io/security/clearslide/clearslide-domain-security/)
+- [Clearslide Vulnerability Disclosure](https://apis.io/security/clearslide/clearslide-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Clearslide Scopes](https://apis.io/scopes/clearslide/clearslide-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Clearslide Plans Pricing](https://apis.io/plans/clearslide/clearslide-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Clearslide Rate Limits](https://apis.io/rate-limits/clearslide/clearslide-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.clearslide.com/)
+- [Documentation](https://developer.clearslide.com/docs/introduction)
+- [Getting started](https://developer.clearslide.com/docs/getting-started-1)
+- [API reference](https://developer.clearslide.com/reference)
+- [Pricing](https://www.clearslide.com/pricing/)
+- [Support](https://developer.clearslide.com/discuss)
+- [Changelog](https://developer.clearslide.com/changelog)
+- [Blog](https://www.showpad.com/blog)
+- [Security](https://www.showpad.com/security)
+- [Privacy policy](https://www.showpad.com/privacy-policy)
+- [GitHub](https://github.com/ClearSlide)
+- [Status](http://status.clearslide.com/)
+
+## API Evangelist rating
+
+**Kin Score 49.2** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 46.5 |
+| Contract governance | 35.6 |
+| Operational transparency | 36.8 |
+| Developer ergonomics | 37.5 |
+| Access clarity | 55.3 |
+
+**Agent readiness 35.7** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | negotiable (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | yes |
+| Consent Identity | — |
+| Agent Card | conformant |
+| Dry Run Mode | — |
+| Delegated Identity | documented (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 36.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/clearslide/](https://apis.io/providers/clearslide/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for ClearSlide: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/clearslide/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
